@@ -1,0 +1,23 @@
+{
+  "object": {
+    "ID": "4e1985eb427e4bd1914f348fc9aff0cf",
+    "direction": -1,
+    "discussCount": 11,
+    "hotCount": 28,
+    "leftCount": 0,
+    "picFileName": "1500864688748.jpg",
+    "picUrl": "/static/img/chat01.1dffeed.png",
+    "publishDate": "2017-07-24 10:51:55",
+    "rewarded": 1,
+    "rightCount": 0,
+    "sortID": 0,
+    "status": 2,
+    "title": "选择自己的另一半，你是愿意选择开朗话多的，还是腼腆话少的？",
+    "type": 0,
+    "userCount": 0,
+    "viewCount": 348
+  },
+  "responseTime": 1502185042150,
+  "resultCode": 200,
+  "resultMsg": "操作成功"
+}

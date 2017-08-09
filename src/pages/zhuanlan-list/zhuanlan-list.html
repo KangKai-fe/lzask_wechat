@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>专栏列表</title>
+		<meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script type="text/javascript">
+			;(function(win,doc) {
+					function change() {
+							// var deviceWidth = document.documentElement.clientWidth;
+							// if(deviceWidth > 750) deviceWidth = 750;
+							// document.documentElement.style.fontSize = deviceWidth / 7.5 + 'px';
+							document.documentElement.style.fontSize = document.documentElement.clientWidth / 7.5 + 'px';
+					}
+					doc.addEventListener('DOMContentLoaded', change, false);
+					win.addEventListener('resize', change, false);
+			})(window, document);
+		</script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
