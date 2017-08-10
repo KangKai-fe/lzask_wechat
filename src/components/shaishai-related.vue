@@ -2,8 +2,8 @@
   <div class="related">
     <module-title title="相关推荐"></module-title>
     <dl class="rel_list01">
-        <dt><a href="#"><img src="../assets/img/tj01.png" alt=""></a></dt>
-        <dd>盗梦与偷心：这些优秀的游戏电影有哪些共通之处？</dd>
+        <dt><a href="#"><img :src="relatedList.photo" alt=""></a></dt>
+        <dd>{{ relatedList.title }}</dd>
     </dl>
   </div>
 </template>

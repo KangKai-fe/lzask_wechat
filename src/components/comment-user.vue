@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="c-name01">
-      <span class="c-img01"><img :src="userInfo.photo" alt=""></span>
-      <h3>{{ userInfo.showName }}<i>L1</i></h3>
+      <span class="c-img01"><img :src="photo" alt=""></span>
+      <h3>{{ showName }}<i v-if="level">{{ level }}</i></h3>
     </div>
   </div>
 </template>
@@ -10,7 +10,7 @@
 <script>
 export default {
   name: 'c-user',
-  props: ['userInfo']
+  props: [ 'photo', 'showName', 'level' ]
 }
 </script>
 

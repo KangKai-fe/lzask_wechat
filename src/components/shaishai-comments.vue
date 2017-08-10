@@ -1,44 +1,44 @@
 <template>
   <div class="comment02">
     <div class="com02_title">评论
-      <span>{{ commentCount }}</span>
+      <span>{{ commentsCount }}</span>
     </div>
     <!-- no comment -->
-    <div class="no_comment" v-if="commentCount === 0">
+    <div class="no_comment" v-if="commentsCount === 0">
       暂无评论
     </div>
     <!-- comment list -->
     <div v-else>
-      <dl class="com02-word">
+      <dl class="com02-word" v-for="comment in commentsShow" :key="comment.ID">
         <dt>
-          <img src="http://115.29.55.231:18886/publish/headicon/1487226111108.jpg" alt="">
+          <img :src="comment.userInfo.photo" alt="用户头像">
         </dt>
         <dd>
-          <span class="zan02 zan" @click="zan">2
+          <span class="zan02 zan" @click="zan">{{ comment.zanCount }}
             <i class="iconfont">&#xe611;</i>
           </span>
-          <h3 class="name02">我是西瓦螃
-            <i>L1</i>
+          <h3 class="name02">{{ comment.userInfo.showName }}
+            <i v-if="comment.userInfo.level">{{ comment.userInfo.level }}</i>
           </h3>
           <p class="con02">
-            往往从一个朴实简单的人物的很小错误或者微小罪行开始。
+            {{ comment.content }}
           </p>
-          <div class="apply">
+          <div class="apply" v-if="comment.reply" v-for="reply in comment.reply" :key="reply.ID">
             <div class="apply_title">
               <span class="app-img">
-                <img src="http://115.29.55.231:18886/publish/headicon/1487226111108.jpg" alt="">
+                <img :src="reply.fromPhoto" alt="用户头像">
               </span>
-              <span class="app-txt01">阿炎</span>
+              <span class="app-txt01">{{ reply.fromName }}</span>
               <strong class="app-txt02">回复</strong>
-              <span class="app-txt01">总是不能瘦的胖</span>
+              <span class="app-txt01">{{ reply.toName }}</span>
             </div>
             <div class="apply_con">
-              科恩兄弟的叙事方法基本上是经典的,但这种经典仅表现在结构上。他们基本上采用顺序叙事,按照开端、发展、结局的传统三幕式结构。
+              {{ reply.content }}
             </div>
           </div>
         </dd>
       </dl>
-      <div class="readMore">
+      <div class="readMore" @click="showMore" v-if="btnMoreShow">
         <a href="javascript: void(0);">查看全部</a>
       </div>
     </div>
@@ -48,9 +48,11 @@
 <script>
 export default {
   name: 'ss-comment',
-  props: ['commentList', 'commentCount'],
+  props: [ 'commentsList', 'commentsCount' ],
   data () {
     return {
+      commentsShow: this.commentsList.slice(0, 3),
+      btnMoreShow: this.commentsCount > 3
     }
   },
   methods: {
@@ -62,7 +64,14 @@ export default {
       //   // $emit zan
       //   this.isZan = 1
       //   this.zanCountLocale++
+    },
+    showMore () {
+      this.commentsShow = this.commentsList
+      this.btnMoreShow = false
     }
+  },
+  created () {
+    console.log(this.commentsList)
   }
 }
 </script>

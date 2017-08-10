@@ -1,77 +1,467 @@
 @charset "utf-8";
+
 /* CSS Document */
-html{background:#f5f5f5;}
-body{background-color:#f5f5f5;color: #323232;font-family:'思源黑体 CN','Microsoft YaHei',SimSun,SimHei ,"STHeiti Light",STHeiti,"Lucida Grande", Tahoma,Arial, Helvetica, sans-serif;}
-html,body,address,blockquote,div,dl,form,h1,h2,h3,h4,h5,h6,ol,p,pre,table,ul,dd,dl,dt,li,tbody,td,tfoot,th,thead,tr,button,del,ins,map,object,a,abbr,acronym,b,bdo,big,br,cite,code,dfn,em,i,img,kbd,q,samp,small,span,strong,sub,sup,tt,var,legend,fieldset{margin:0px; padding:0px;color: #282828; -webkit-font-smoothing: subpixel-antialiased; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;}
-table{border-collapse:collapse;border-spacing:0;width:100%;}
-fieldset,img{border:0;}
-img,object{width:100%;-ms-interpolation-mode: bicubic;display: block;font-size: .2rem;}
-a{outline:none;text-decoration:none;color: #323232;}
-a:hover{text-decoration: none;}
-input[type='button']{outline:none;border:0 none;background-color:transparent;cursor:pointer;}
-address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:400;}
-ul,ol,li{list-style:none outside none;}
-.tc{text-align:center !important;}
-.tl{text-align:left  !important;}
-.tr{text-align:right  !important;}
-.pa{position: absolute;}
-.pr{position: relative;}
-h1,h2,h3,h4,h5,h6{font-size:100%;}
-q:before,q:after{content:'';content:none;}
-input,textarea,select{font-weight:inherit;}
-input,select,textarea,button {vertical-align:middle}
 
-
-
-.chat-detail01{width: auto;height: 0.88rem;background-color:#2d2d2d;text-align: center;padding:0 0.3rem;box-shadow: 0 0.02rem 0.2rem #bcbcbc}
-.go-prew{width: 0.17rem;height: 0.3rem;float: left;margin-top: 0.22rem;}
-.go-prew a{color:#fff;height: 0.3rem;display: block;font-size: 0.28rem;}
-.detail_title01{font-size: 0.36rem;color:#fff;display: block;margin:0 auto;line-height: 0.88rem;height: 0.88rem;}
-.chat-banner01{width: 100%;overflow: hidden;}
-.chat-banner01 img{display: block;width: 100%;}
-.chatB_title01{width: auto;padding:0 0.3rem;}
-.chatB_title01 h3{font-size: 0.36rem;line-height: 0.48rem;padding:0.3rem 0;}
-.remarks{width: 100%;overflow: hidden;height: 0.37rem;line-height: 0.37rem;padding-bottom: 0.4rem;}
-.dates{font-size: 0.24rem;color:#000;float:left;}
-.remark_bottom{float:right;font-size: 0.16rem;}
-.remark_bottom span{display: inline-block;font-size:0.16rem}
-/*.hots{background:url(../images/hot.png) no-repeat left center;margin-right: 0.2rem;background-size: 0.2rem 0.24rem;}*/
-.hots{margin-right: 0.15rem;}
-.hots i{margin-right: 0.08rem;font-size: 0.28rem;float:left;color:#000;margin-top:-0.02rem;}
-.view i{margin-right: 0.08rem;font-size: 0.23rem;float:left;color:#000;margin-top: 0.01rem;}
-/*.view{background:url(../images/view.png) no-repeat left center;background-size: 0.2rem 0.2rem;}*/
-.comment01{width: 100%;overflow: hidden;}
-.com_title01{width: auto;margin:0 0.3rem;border-top:0.01rem solid  #e1e1e1;font-size: 0.32rem;padding:0.3rem 0;}
-.com_title01 h3{position: relative;padding-left:0.23rem;}
-.com_title01 h3:before{content:'';width: 0.1rem;height: 0.3rem;background-color:#323232;border-radius: 0.1rem;display: block;position: absolute;left:0;top:0.09rem;}
-.com-sound{width:auto;overflow: hidden;background-color: #fff;padding:0.38rem 0.42rem 0 0.48rem;margin-bottom:0.2rem;}
-.c-name01{width: auto;overflow: hidden;padding-bottom: 0.38rem}
-.c-img01{width: 0.8rem;height: 0.8rem;border-radius: 0.8rem;float:left;overflow: hidden;box-shadow: 0.01rem 0.03rem 0.05rem #b2b2b2}
-
-.c-name01 h3{font-size:0.3rem;margin-left:1rem;height: 0.8rem;line-height: 0.8rem;color:#80aedc;font-weight: normal;}
-.c-name01 i{font-family: 'Chaparral Pro';font-weight: bold;font-size: 0.24rem;color:#ff8888;margin-left: 0.2rem;}
-.c-voice01{width: 4.03rem;height: 0.7rem;line-height: 0.7rem;border-radius: 0.08rem;position: relative;
-	background-color:#cabdd0;
-   background: -webkit-linear-gradient(left, #fec8c8, #81aedc);
-   background: -o-linear-gradient(left, #fec8c8, #81aedc);
-   background: -moz-linear-gradient(left, #fec8c8, #81aedc);
-   background: -ms-linear-gradient(left, #fec8c8, #81aedc);
+html {
+    background: #f5f5f5;
 }
-.c-voice01:before{content: '';width: 0; height: 0;
-    border-bottom: 0.2rem solid #fac7c9;
-    border-left: 0.18rem solid transparent;position: absolute;top:-0.18rem;left:0.05rem;display: block;}
 
-.times{color:#fff;font-size: 0.3rem;line-height: 0.7rem;padding-left: 0.4rem;float:left;}
-.voice01{width:0.2rem;height: 0.28rem;position: absolute;top:0.2rem;right: 0.36rem;display: block;}
-.c-bottom01{width: 100%;padding:0.4rem 0;font-size:0.24rem;text-align: center;}
-.c-bottom01 span{color:#80aedc;/*padding-left:0.48rem;*/height: 0.37rem;line-height: 0.37rem;/*background-size:0.36rem 0.36rem;*/}
-.c-bottom01 span i{color:#ccd9e7;float: left;margin-right: 0.1rem;}
-.times01{float:left;/*background:url(../images/times01.png) no-repeat left center;*/}
-.times01 i{font-size: 0.39rem;}
-.listen{margin:0 auto;/*background:url(../images/listen.png) no-repeat left center;*/display: inline-block}
-.listen i{font-size: 0.38rem;}
-.heart{float:right;margin-right: 0.2rem;/*background:url(../images/heart.png) no-repeat left center;*/}
-.heart i{font-size: 0.39rem;}
-.heart.active i{/*background:url(../images/heart_active.png) no-repeat left center;background-size:0.36rem 0.36rem;*/color:#ff8888;}
-.com-word{width:auto;overflow: hidden;background-color: #fff;padding:0.38rem 0.42rem 0 0.48rem;margin-bottom:0.2rem;}
-.c-word01{font-size: 0.3rem;line-height: 0.4rem;}
+body {
+    width: 100%;
+    overflow-x: hidden;
+    background-color: #f5f5f5;
+    color: #323232;
+    font-family: '思源黑体 CN', 'Microsoft YaHei', SimSun, SimHei, "STHeiti Light", STHeiti, "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
+}
+
+html,
+body,
+address,
+blockquote,
+div,
+dl,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ol,
+p,
+pre,
+table,
+ul,
+dd,
+dl,
+dt,
+li,
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr,
+button,
+del,
+ins,
+map,
+object,
+a,
+abbr,
+acronym,
+b,
+bdo,
+big,
+br,
+cite,
+code,
+dfn,
+em,
+i,
+img,
+kbd,
+q,
+samp,
+small,
+span,
+strong,
+sub,
+sup,
+tt,
+var,
+legend,
+fieldset {
+    margin: 0px;
+    padding: 0px;
+    color: #282828;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+fieldset,
+img {
+    border: 0;
+}
+
+img,
+object {
+    width: 100%;
+    -ms-interpolation-mode: bicubic;
+    display: block;
+    font-size: .2rem;
+}
+
+a {
+    outline: none;
+    text-decoration: none;
+    color: #323232;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+input[type='button'] {
+    outline: none;
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+strong,
+th,
+var {
+    font-style: normal;
+    font-weight: 400;
+}
+
+ul,
+ol,
+li {
+    list-style: none outside none;
+}
+
+.tc {
+    text-align: center !important;
+}
+
+.tl {
+    text-align: left !important;
+}
+
+.tr {
+    text-align: right !important;
+}
+
+.pa {
+    position: absolute;
+}
+
+.pr {
+    position: relative;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: 100%;
+}
+
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+
+input,
+textarea,
+select {
+    font-weight: inherit;
+}
+
+input,
+select,
+textarea,
+button {
+    vertical-align: middle
+}
+
+.chat-detail01 {
+    width: auto;
+    height: 0.88rem;
+    background-color: #2d2d2d;
+    text-align: center;
+    padding: 0 0.3rem;
+    box-shadow: 0 0.02rem 0.2rem #bcbcbc
+}
+
+.go-prew {
+    width: 0.17rem;
+    height: 0.3rem;
+    float: left;
+    margin-top: 0.22rem;
+}
+
+.go-prew a {
+    color: #fff;
+    height: 0.3rem;
+    display: block;
+    font-size: 0.28rem;
+}
+
+.detail_title01 {
+    font-size: 0.36rem;
+    color: #fff;
+    display: block;
+    margin: 0 auto;
+    line-height: 0.88rem;
+    height: 0.88rem;
+}
+
+.chat-banner01 {
+    width: 100%;
+    overflow: hidden;
+}
+
+.chat-banner01 img {
+    display: block;
+    width: 100%;
+}
+
+.chatB_title01 {
+    width: auto;
+    padding: 0 0.3rem;
+}
+
+.chatB_title01 h3 {
+    font-size: 0.36rem;
+    line-height: 0.48rem;
+    padding: 0.3rem 0;
+}
+
+.remarks {
+    width: 100%;
+    overflow: hidden;
+    height: 0.37rem;
+    line-height: 0.37rem;
+    padding-bottom: 0.4rem;
+}
+
+.dates {
+    font-size: 0.24rem;
+    color: #000;
+    float: left;
+}
+
+.remark_bottom {
+    float: right;
+    font-size: 0.16rem;
+}
+
+.remark_bottom span {
+    display: inline-block;
+    font-size: 0.16rem
+}
+
+
+/*.hots{background:url(../images/hot.png) no-repeat left center;margin-right: 0.2rem;background-size: 0.2rem 0.24rem;}*/
+
+.hots {
+    margin-right: 0.15rem;
+}
+
+.hots i {
+    margin-right: 0.08rem;
+    font-size: 0.28rem;
+    float: left;
+    color: #000;
+    margin-top: -0.02rem;
+}
+
+.view i {
+    margin-right: 0.08rem;
+    font-size: 0.23rem;
+    float: left;
+    color: #000;
+    margin-top: 0.01rem;
+}
+
+
+/*.view{background:url(../images/view.png) no-repeat left center;background-size: 0.2rem 0.2rem;}*/
+
+.comment01 {
+    width: 100%;
+    overflow: hidden;
+}
+
+.com_title01 {
+    width: auto;
+    margin: 0 0.3rem;
+    border-top: 0.01rem solid #e1e1e1;
+    font-size: 0.32rem;
+    padding: 0.3rem 0;
+}
+
+.com_title01 h3 {
+    position: relative;
+    padding-left: 0.23rem;
+}
+
+.com_title01 h3:before {
+    content: '';
+    width: 0.1rem;
+    height: 0.3rem;
+    background-color: #323232;
+    border-radius: 0.1rem;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0.09rem;
+}
+
+.com-sound {
+    width: auto;
+    overflow: hidden;
+    background-color: #fff;
+    padding: 0.38rem 0.42rem 0 0.48rem;
+    margin-bottom: 0.2rem;
+}
+
+.c-name01 {
+    width: auto;
+    overflow: hidden;
+    padding-bottom: 0.38rem
+}
+
+.c-img01 {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 0.8rem;
+    float: left;
+    overflow: hidden;
+    box-shadow: 0.01rem 0.03rem 0.05rem #b2b2b2
+}
+
+.c-name01 h3 {
+    font-size: 0.3rem;
+    margin-left: 1rem;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    color: #80aedc;
+    font-weight: normal;
+}
+
+.c-name01 i {
+    font-family: 'Chaparral Pro';
+    font-weight: bold;
+    font-size: 0.24rem;
+    color: #ff8888;
+    margin-left: 0.2rem;
+}
+
+.c-voice01 {
+    width: 4.03rem;
+    height: 0.7rem;
+    line-height: 0.7rem;
+    border-radius: 0.08rem;
+    position: relative;
+    background-color: #cabdd0;
+    background: -webkit-linear-gradient(left, #fec8c8, #81aedc);
+    background: -o-linear-gradient(left, #fec8c8, #81aedc);
+    background: -moz-linear-gradient(left, #fec8c8, #81aedc);
+    background: -ms-linear-gradient(left, #fec8c8, #81aedc);
+}
+
+.c-voice01:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-bottom: 0.2rem solid #fac7c9;
+    border-left: 0.18rem solid transparent;
+    position: absolute;
+    top: -0.18rem;
+    left: 0.05rem;
+    display: block;
+}
+
+.times {
+    color: #fff;
+    font-size: 0.3rem;
+    line-height: 0.7rem;
+    padding-left: 0.4rem;
+    float: left;
+}
+
+.voice01 {
+    width: 0.2rem;
+    height: 0.28rem;
+    position: absolute;
+    top: 0.2rem;
+    right: 0.36rem;
+    display: block;
+}
+
+.c-bottom01 {
+    width: 100%;
+    padding: 0.4rem 0;
+    font-size: 0.24rem;
+    text-align: center;
+}
+
+.c-bottom01 span {
+    color: #80aedc;
+    /*padding-left:0.48rem;*/
+    height: 0.37rem;
+    line-height: 0.37rem;
+    /*background-size:0.36rem 0.36rem;*/
+}
+
+.c-bottom01 span i {
+    color: #ccd9e7;
+    float: left;
+    margin-right: 0.1rem;
+}
+
+.times01 {
+    float: left;
+    /*background:url(../images/times01.png) no-repeat left center;*/
+}
+
+.times01 i {
+    font-size: 0.39rem;
+}
+
+.listen {
+    margin: 0 auto;
+    /*background:url(../images/listen.png) no-repeat left center;*/
+    display: inline-block
+}
+
+.listen i {
+    font-size: 0.38rem;
+}
+
+.heart {
+    float: right;
+    margin-right: 0.2rem;
+    /*background:url(../images/heart.png) no-repeat left center;*/
+}
+
+.heart i {
+    font-size: 0.39rem;
+}
+
+.heart.active i {
+    /*background:url(../images/heart_active.png) no-repeat left center;background-size:0.36rem 0.36rem;*/
+    color: #ff8888;
+}
+
+.com-word {
+    width: auto;
+    overflow: hidden;
+    background-color: #fff;
+    padding: 0.38rem 0.42rem 0 0.48rem;
+    margin-bottom: 0.2rem;
+}
+
+.c-word01 {
+    font-size: 0.3rem;
+    line-height: 0.4rem;
+}

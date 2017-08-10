@@ -23,10 +23,15 @@
     </div>
 
     <!-- related recommend -->
-    <related></related>
+    <related v-if="relatedList.length"
+      :relatedList="relatedList"
+    ></related>
 
     <!-- comment list -->
-    <comments></comments>
+    <comments v-if="commentsList.length"
+      :commentsList="commentsList"
+      :commentsCount="commentsList.length"
+    ></comments>
   </div>
 </template>
 
@@ -51,7 +56,9 @@ export default {
   name: 'app',
   data () {
     return {
-      ssDetail: {}
+      ssDetail: {},
+      commentsList: [],
+      relatedList: []
     }
   },
   computed: {
@@ -67,6 +74,19 @@ export default {
 
     this.ssDetail = MockShort
     // this.ssDetail = MockLong
+
+    /* comments */
+    this.$http.get('/static/api/discuss/list.json')
+      .then(res => {
+        let resData = JSON.parse(JSON.stringify(res))
+        // console.log(resData)
+        if (resData.resultCode === 200) {
+          this.commentsList = resData.object
+        }
+      })
+      .catch(err => {
+        console.log('err', err)
+      })
   },
 
   components: {

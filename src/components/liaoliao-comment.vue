@@ -1,6 +1,9 @@
 <template>
   <div class="comment">
-    <user :userInfo="comment.userInfo"></user>
+    <user
+      :showName="comment.userInfo.showName"
+      :photo="comment.userInfo.photo"
+    ></user>
     <div v-if="comment.content" class="c-word01">{{ comment.content }}</div>
     <voice v-else-if="comment.fileName && comment.soundTime"
       :url="comment.fileName"

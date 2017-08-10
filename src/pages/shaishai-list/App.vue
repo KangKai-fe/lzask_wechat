@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="width: 100%; overflow: scroll; -webkit-overflow-scrolling: touch;">
+    <div class="tab-container">
       <tab style="width: 14rem;" :custom-bar-width="getBarWidth" :line-width="3" v-model="tabIndex">
         <tab-item selected>最新</tab-item>
         <tab-item>关注</tab-item>
@@ -132,6 +132,7 @@ export default {
       return
     }
     this.$http.get('/static/api/bask/listByPublish.json', {
+    // this.$http.get('/salt/salt2rice/bask/lisNewtByPublish', {
       params: {
         pageSize: this.pageSize,
         pageIndex: this.currentPage
@@ -160,12 +161,18 @@ export default {
 </script>
 
 <style>
-  .tab-swiper {
-    background: #fff;
-  }
+.tab-container {
+  width: 100%;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
 
-  .mint-loadmore-top,
-  .mint-loadmore-bottom {
-    font-size: 12px !important;
-  }
+.tab-swiper {
+  background: #fff;
+}
+
+.mint-loadmore-top,
+.mint-loadmore-bottom {
+  font-size: 12px !important;
+}
 </style>

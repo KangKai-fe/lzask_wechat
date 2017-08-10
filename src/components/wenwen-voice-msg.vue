@@ -1,7 +1,7 @@
 <template>
-  <div class="c-voice01" :data-url="url" @click.stop="playVoice">
-    <span class="times">{{ soundDuration }}</span>
-    <strong class="voice01"><img src="../assets/img/voice.png" alt=""></strong>
+  <div class="c-voice01 ww-voice02">
+    <span class="times">点击播放</span>
+    <strong class="voice01"><img src="../assets/img/voice.png"></strong>
   </div>
 </template>
 
@@ -27,5 +27,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.ss-voice01 .c-voice01{margin:0.1rem 0.25rem 0.25rem;}
+.c-voice01:before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 0.21rem solid #fdc8c8;
+  border-left: 0.18rem solid transparent;
+  position: absolute;
+  top: 0.33rem;
+  left: -0.16rem;
+  border-bottom: none;
+}
 </style>

@@ -54,7 +54,23 @@
       "weixinType": 1,
       "wxopenID": "oCp-av34IhwKas8zOBEW5VsCG_Tk",
       "zanCount": 2,
-      "zanStatus": 0
+      "zanStatus": 0,
+      "reply": [
+        {
+          "ID": "1",
+          "fromPhoto": "http://115.29.55.231:18886/publish/headicon/1501220910130.jpg",
+          "fromName": "匿名用户",
+          "toName": "啊哈",
+          "content": "往往从一个朴实简单的人物的很小错误或者微小罪行开始。"
+        },
+        {
+          "ID": "2",
+          "fromPhoto": "http://115.29.55.231:18886/publish/headicon/1476954195762.jpeg",
+          "fromName": "啊哈",
+          "toName": "匿名用户",
+          "content": "往往从一个朴实简单的人物的很小错误或者微小罪行开始。"
+        }
+      ]
     },
     {
       "ID": "2d914e2af82640eaa437b49af104f0e5",
