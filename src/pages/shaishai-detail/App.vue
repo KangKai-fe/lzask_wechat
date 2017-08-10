@@ -76,7 +76,12 @@ export default {
     // this.ssDetail = MockLong
 
     /* comments */
-    this.$http.get('/static/api/discuss/list.json')
+    // TODO shaishai comment list
+    this.$http.get('/discuss/list', {
+      params: {
+        topicID: baskID
+      }
+    })
       .then(res => {
         let resData = JSON.parse(JSON.stringify(res))
         // console.log(resData)

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 /* axios */
-// axios.defaults.baseURL = 'https://192.168.1.234:8443/salt/salt2rice/'
+axios.defaults.baseURL = 'https://192.168.1.234:8443/salt/salt2rice/'
 // dev api
 // axios.defaults.baseURL = '/salt/salt2rice/'
 const defaultParams = {

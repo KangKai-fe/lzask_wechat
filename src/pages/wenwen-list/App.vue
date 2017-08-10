@@ -80,7 +80,7 @@ export default {
     }
   },
   created () {
-    this.$http.get('https://192.168.1.234:8443/salt/salt2rice/userInfo/listHotUser')
+    this.$http.get('/userInfo/listHotUser')
       .then(res => {
         let resData = JSON.parse(JSON.stringify(res))
         console.log('------ hot user -------', resData)

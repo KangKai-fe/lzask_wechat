@@ -37,7 +37,11 @@ export default {
     console.log(topicID)
 
     /* liaoliao detail */
-    this.$http.get('/static/api/topic/detail.json')
+    this.$http.get('/topic/detail', {
+      params: {
+        topicID: topicID
+      }
+    })
       .then(res => {
         let resData = JSON.parse(JSON.stringify(res))
         // console.log(resData)
@@ -51,7 +55,11 @@ export default {
       })
 
     /* comments */
-    this.$http.get('/static/api/discuss/list.json')
+    this.$http.get('/discuss/list', {
+      params: {
+        topicID: topicID
+      }
+    })
       .then(res => {
         let resData = JSON.parse(JSON.stringify(res))
         // console.log(resData)
