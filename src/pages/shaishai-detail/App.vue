@@ -1,37 +1,40 @@
 <template>
-  <div>
+  <div :class="{ container_padded: commentable }">
     <!-- shaishai content -->
     <div class="question01">
-      <author :userInfo="ssDetail.userInfo"></author>
-      <content-long v-if="ssDetail.childrenList.length"
-        :title="ssDetail.content"
-        :cover="ssDetail.photoUrl"
-        :childrenList="ssDetail.childrenList"
-      ></content-long>
-      <content-short v-if="ssDetail.picList.length"
-        :content="ssDetail.content"
-        :picList="ssDetail.picList"
-        :picStr="ssDetail.picStr"
-      ></content-short>
+      <author v-if="ssDetail.userInfo" :userInfo="ssDetail.userInfo"></author>
+      <content-long v-if="ssDetail.childrenList && ssDetail.childrenList.length" :title="ssDetail.content" :cover="ssDetail.photoUrl" :childrenList="ssDetail.childrenList"></content-long>
+      <content-short v-if="ssDetail.picList && ssDetail.picList.length" :content="ssDetail.content" :picList="ssDetail.picList" :picStr="ssDetail.picStr" :type="ssDetail.type" :soundTime="ssDetail.soundTime"></content-short>
       <tags v-if="ssDetail.tagStr && ssDetail.tagStr !== ''" :tagStr="ssDetail.tagStr"></tags>
-      <status
+      <status v-if="ssDetail.createDate"
         :createDate="ssDetail.createDate"
         :viewCount="ssDetail.viewCount"
         :zanCount="ssDetail.zanCount"
         :zanStatus="ssDetail.zanStatus"
+        :baskID="ssDetail.ID"
       ></status>
     </div>
 
     <!-- related recommend -->
-    <related v-if="relatedList.length"
-      :relatedList="relatedList"
-    ></related>
+    <related v-if="related !== {}" :related="related"></related>
 
     <!-- comment list -->
-    <comments v-if="commentsList.length"
+    <comments class="comments"
       :commentsList="commentsList"
-      :commentsCount="commentsList.length"
+      :commentsCount="ssDetail.commentCount"
+      :btnMoreShow="commentsBtnMoreShow"
+      @commentClicked="replyComment"
+      @commentCheckMore="getAllComments"
+      @replyBtnClickd="replyComment"
     ></comments>
+
+    <!-- comment area -->
+     <comment-area v-if="commentable"
+      :baskID="baskID"
+      :replyCommentID="replyCommentID"
+      :replyPlaceholder="replyPlaceholder"
+      @areaBlur="areaBlur"
+     ></comment-area>
   </div>
 </template>
 
@@ -47,10 +50,7 @@ import SSStatus from '../../components/shaishai-status.vue'
 import SSTags from '../../components/shaishai-tags.vue'
 import SSRelated from '../../components/shaishai-related.vue'
 import SSComments from '../../components/shaishai-comments.vue'
-
-/* mock data */
-// import MockLong from '../../mockdata/shaishai-long'
-import MockShort from '../../mockdata/shaishai-short'
+import CommentArea from '../../components/comment-area.vue'
 
 export default {
   name: 'app',
@@ -58,35 +58,87 @@ export default {
     return {
       ssDetail: {},
       commentsList: [],
-      relatedList: []
+      related: {},
+      commentable: true,
+      baskID: '',
+      replyCommentID: '',
+      replyPlaceholder: '',
+      commentsBtnMoreShow: false
     }
   },
   computed: {
   },
   methods: {
+    replyComment (commentID, replyUserName) {
+      this.replyCommentID = commentID
+      if (replyUserName) {
+        this.replyPlaceholder = '回复:' + replyUserName
+      } else {
+        this.replyPlaceholder = '在这里说点什么吧'
+      }
+      console.log('target', this.replyCommentID)
+    },
+    getAllComments () {
+      this.$http.get('/baskComment/listByPublish', {
+        params: {
+          baskID: this.baskID,
+          currentUserID: this.$http.userID,
+          pageSize: this.ssDetail.commentCount
+        }
+      })
+        .then(res => {
+          if (res.resultCode === 200) {
+            this.commentsList = res.object
+            this.commentsBtnMoreShow = false
+          }
+        })
+        .catch(err => {
+          console.log('err', err)
+        })
+    },
+    areaBlur () {
+      console.log('father blur')
+      // this.replyCommentID = ''
+      // this.replyPlaceholder = ''
+    }
   },
 
   created () {
     // 晒晒 id
     const baskID = querystring.parse().baskID
+    const userID = this.$http.userID
     this.baskID = baskID
     console.log(baskID)
 
-    this.ssDetail = MockShort
-    // this.ssDetail = MockLong
-
-    /* comments */
-    // TODO shaishai comment list
-    this.$http.get('/discuss/list', {
+    this.$http.get('/bask/detail', {
       params: {
-        topicID: baskID
+        baskID: baskID
       }
     })
       .then(res => {
-        let resData = JSON.parse(JSON.stringify(res))
-        // console.log(resData)
-        if (resData.resultCode === 200) {
-          this.commentsList = resData.object
+        if (res.resultCode === 200) {
+          this.ssDetail = res.object
+          this.related = res.object.related
+          if (res.object.commentCount > 3) {
+            this.commentsBtnMoreShow = true
+          }
+        }
+      })
+      .catch(err => {
+        console.log('err', err)
+      })
+
+    /* comments */
+    this.$http.get('/baskComment/listByPublish', {
+      params: {
+        baskID: baskID,
+        currentUserID: userID,
+        pageSize: 3
+      }
+    })
+      .then(res => {
+        if (res.resultCode === 200) {
+          this.commentsList = res.object
         }
       })
       .catch(err => {
@@ -101,15 +153,21 @@ export default {
     'tags': SSTags,
     'status': SSStatus,
     'related': SSRelated,
-    'comments': SSComments
+    'comments': SSComments,
+    'comment-area': CommentArea
   }
 }
 </script>
 
 <style>
-/*晒晒正文短*/
-.question01{background-color:#fff;}
+.container_padded {
+  padding-bottom: 1.4rem;
+}
+.question01 {
+  background-color: #fff;
+}
 
-.message{background-color:#fff;box-shadow: -1px 5px 10px #c2c2c2;padding:0.1rem 0.25rem;width: auto;overflow: hidden;}
-.message textarea{background:none;width: 100%;min-height: 1.1rem;border:none;background:url(../../assets/img/message_bg.png) no-repeat right center;display: block;color:#bcbcbc;background-size: 0.48rem;}
+.comments {
+  margin-top: 0.25rem;
+}
 </style>

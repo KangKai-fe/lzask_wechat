@@ -6,7 +6,7 @@
       <div class="user_container">
         <ul class="clearfix">
           <li v-for="user in usersList" :key="user.ID"><a href="javascript: void(0);">
-            <span class="ww-img01"><img :src="user.photo" :alt="user.photoStr"></span>
+            <span class="ww-img01"><lazy-img :src="user.photo" alt="user.photoStr"></lazy-img></span>
             <h3 class="ww-txt01">{{ user.showName }}</h3>
           </a></li>
           <li @click="checkMoreUser"><a href="javascript: void(0);">
@@ -25,6 +25,10 @@
         :key="question.questionID"
         :questionInfo="question"
       ></question>
+
+      <div class="readMore" @click="showMore">
+        <a href="javascript: void(0);">更多问题</a>
+      </div>
     </div>
   </div>
 </template>
@@ -33,6 +37,7 @@
 /* custom component */
 import ModuleTitle from '../../components/module-title.vue'
 import hotQuestion from '../../components/wenwen-hot-question.vue'
+import LazyImg from '../../components/common-lazy-img.vue'
 
 export default {
   name: 'app',
@@ -47,8 +52,11 @@ export default {
   },
   methods: {
     checkMoreUser () {
-      console.log('check more users')
+      location.href = 'find-users.html'
     },
+    showMore () {
+      location.href = 'question-list.html'
+    }/* ,
     handleTopChange (status) {
       this.topStatus = status
     },
@@ -64,12 +72,10 @@ export default {
     },
 
     listLoadBottom () {
-      this.$http.get('/static/api/topic/listHistory.json')
+      this.$http.get('/topic/listHistory')
         .then(res => {
-          let resData = JSON.parse(JSON.stringify(res))
-          console.log(resData)
-          if (resData.success) {
-            this.dataList = this.dataList.concat(resData.object)
+          if (res.resultCode === 200) {
+            this.dataList = this.dataList.concat(res.object)
           }
           this.$refs.loadmoreItems.onBottomLoaded()
         })
@@ -77,25 +83,27 @@ export default {
           console.log('err', err)
           this.$refs.loadmoreItems.onBottomLoaded()
         })
-    }
+    } */
   },
   created () {
     this.$http.get('/userInfo/listHotUser')
       .then(res => {
-        let resData = JSON.parse(JSON.stringify(res))
-        console.log('------ hot user -------', resData)
-        if (resData.resultCode === 200) {
-          this.usersList = resData.object
+        if (res.resultCode === 200) {
+          this.usersList = res.object
         }
       })
       .catch(err => {
         console.log('------------- err -------------', err)
       })
-    this.$http.get('/static/api/homepage/partBottom.json')
+    this.$http.get('/homepage/partBottom', {
+      params: {
+        pageSize: 10
+      }
+    })
       .then(res => {
-        let resData = JSON.parse(JSON.stringify(res))
-        if (resData.resultCode === 200) {
-          this.questionsList = resData.object
+        if (res.resultCode === 200) {
+          console.log(res.object)
+          this.questionsList = res.object
         }
       })
       .catch(err => {
@@ -104,7 +112,8 @@ export default {
   },
   components: {
     'module-title': ModuleTitle,
-    'question': hotQuestion
+    'question': hotQuestion,
+    'lazy-img': LazyImg
   }
 }
 </script>
@@ -119,12 +128,8 @@ export default {
   margin-top: 0.3rem;
 }
 
-.question {
-  padding-top: 0.3rem;
-}
-
 .first_question {
-  padding-top: 0;
+  padding-top: 0 !important;
 }
 
 .user_container {
@@ -167,6 +172,23 @@ export default {
   text-align: center;
   font-weight: normal;
   white-space: nowrap;
+}
+
+.readMore {
+  text-align: center;
+  height: 1rem;
+  line-height: 1rem;
+}
+
+.readMore a {
+  display: block;
+  margin: 0 auto;
+  padding-left: 0.53rem;
+  background: url(../../assets/img/more_bg.png) no-repeat left center;
+  font-size: 0.3rem;
+  width: 1.27rem;
+  color: #646464;
+  background-size: 0.32rem;
 }
 
 </style>

@@ -1,13 +1,18 @@
 <template>
   <div>
     <module-title title="精彩评论"></module-title>
-    <div class="no_comment" v-if="commentsList.length === 0">
+    <div class="no_comment" v-if="commentsCount === 0">
       暂无评论
     </div>
-    <comment v-else v-for="comment in commentsList"
-      :key="comment.ID"
-      :comment="comment"
-    ></comment>
+    <div v-else>
+      <comment v-for="comment in commentsList"
+        :key="comment.ID"
+        :comment="comment"
+      ></comment>
+      <div class="readMore" @click="showMore" v-if="btnMoreShow">
+        <a href="javascript: void(0);">查看全部</a>
+      </div>
+    </div>
   </div>
   </div>
 </template>
@@ -18,7 +23,12 @@ import LLComment from './liaoliao-comment.vue'
 
 export default {
   name: 'ss-author',
-  props: ['commentsList'],
+  props: [ 'commentsList', 'commentsCount', 'btnMoreShow' ],
+  methods: {
+    showMore () {
+      this.$emit('checkMoreComments')
+    }
+  },
   components: {
     'module-title': ModuleTitle,
     'comment': LLComment
@@ -54,5 +64,22 @@ export default {
   line-height: 1rem;
   font-size: 0.3rem;
   text-align: center;
+}
+
+.readMore {
+  text-align: center;
+  height: 1rem;
+  line-height: 1rem;
+}
+
+.readMore a {
+  display: block;
+  margin: 0 auto;
+  padding-left: 0.53rem;
+  background: url(../assets/img/more_bg.png) no-repeat left center;
+  font-size: 0.3rem;
+  width: 1.27rem;
+  color: #646464;
+  background-size: 0.32rem;
 }
 </style>

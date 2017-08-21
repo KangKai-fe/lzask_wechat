@@ -18,8 +18,12 @@ export default {
   data () {
     return {
       isZan: this.zanStatus,
-      zanCountLocale: this.zanCount,
-      timeFromNow: moment(this.publishDate).fromNow()
+      zanCountLocale: this.zanCount
+    }
+  },
+  computed: {
+    timeFromNow () {
+      return moment(this.publishDate).fromNow()
     }
   },
   methods: {
@@ -38,14 +42,59 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.remarks{width: 100%;overflow: hidden;height: 0.37rem;line-height: 0.37rem;padding-bottom: 0.4rem;}
-.dates{font-size: 0.24rem;color:#000;float:left;}
-.remark_bottom{float:right;font-size: 0.16rem;}
-.remark_bottom span{display: inline-block;font-size:0.16rem}
-.white-remarks{position: absolute;left: 0;bottom:0.2rem;padding-bottom: 0;}
-.white-remarks span{color:#fff;height:0.42rem;line-height:0.42rem;}
-.white-remarks span.dates{margin-left:0.2rem }
-.white-remarks .hots i{color:#fff;}
-.white-remarks .view i{color:#fff;}
-.white-remarks .remark_bottom{padding-right: 0.2rem;font-size:0}
+
+.remarks {
+  width: 100%;
+  overflow: hidden;
+  height: 0.37rem;
+  line-height: 0.37rem;
+  padding-bottom: 0.4rem;
+}
+
+.dates {
+  font-size: 0.24rem;
+  color: #000;
+  float: left;
+}
+
+.remark_bottom {
+  float: right;
+  font-size: 0.16rem;
+}
+
+.remark_bottom span {
+  display: inline-block;
+  font-size: 0.16rem
+}
+
+.white-remarks {
+  position: absolute;
+  left: 0;
+  bottom: 0.2rem;
+  padding-bottom: 0;
+}
+
+.white-remarks span {
+  color: #fff;
+  height: 0.42rem;
+  line-height: 0.42rem;
+}
+
+.white-remarks span.dates {
+  margin-left: 0.2rem
+}
+
+.white-remarks .hots i {
+  color: #fff;
+}
+
+.white-remarks .view i {
+  color: #fff;
+}
+
+.white-remarks .remark_bottom {
+  padding-right: 0.2rem;
+  font-size: 0
+}
+
 </style>

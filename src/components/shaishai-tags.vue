@@ -19,7 +19,7 @@ export default {
 </script>
 
 <style scoped>
-.tags {font-size: 0.3rem;padding:0 0.25rem 0.2rem;}
+.tags {font-size: 0.3rem;padding:0.2rem 0.25rem;}
 .tags span {color:#80aedc;margin-right: 0.23rem;}
 .tags strong {color:#ff8888;margin-right: 0.23rem;}
 </style>

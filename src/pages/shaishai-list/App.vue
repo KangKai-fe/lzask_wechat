@@ -26,6 +26,10 @@
           :data="item"
         ></list-item>
 
+        <!-- no more data -->
+        <div class="no_more_data" v-if="listAllLoaded">
+          暂无更多数据
+        </div>
       </mt-loadmore>
     </div>
   </div>
@@ -79,40 +83,41 @@ export default {
     },
 
     listLoadTop () {
-      this.$http.get('/static/api/bask/listByPublish.json', {
+      this.$http.get('/bask/listByPublish', {
         params: {
-          pageSize: this.pageSize,
+          firstTags: '',
           pageIndex: 1
         }
       })
         .then(res => {
-          let resData = JSON.parse(JSON.stringify(res))
-          console.log(resData)
-          if (resData.resultCode === 200) {
-            this.dataList = resData.object
-            this.currentPage = 1
+          if (res.resultCode === 200) {
+            this.dataList = res.object
+            this.currentPage = 2
+            this.listAllLoaded = false
           }
-          this.$refs.loadmoreItems.onBottomLoaded()
+          this.$refs.loadmoreItems.onTopLoaded()
         })
         .catch(err => {
           console.log('err', err)
-          this.$refs.loadmoreItems.onBottomLoaded()
+          this.$refs.loadmoreItems.onTopLoaded()
         })
     },
 
     listLoadBottom () {
-      this.$http.get('/static/api/bask/listByPublish.json', {
+      this.$http.get('/bask/listByPublish', {
         params: {
-          pageSize: this.pageSize,
+          firstTags: '',
           pageIndex: this.currentPage
         }
       })
         .then(res => {
-          let resData = JSON.parse(JSON.stringify(res))
-          console.log(resData)
-          if (resData.resultCode === 200) {
-            this.dataList = this.dataList.concat(resData.object)
-            this.currentPage++
+          if (res.resultCode === 200) {
+            if (res.object.length > 0) {
+              this.dataList = this.dataList.concat(res.object)
+              this.currentPage++
+            } else {
+              this.listAllLoaded = true
+            }
           }
           this.$refs.loadmoreItems.onBottomLoaded()
         })
@@ -131,18 +136,14 @@ export default {
     if (this.dataList.length) {
       return
     }
-    this.$http.get('/static/api/bask/listByPublish.json', {
-    // this.$http.get('/salt/salt2rice/bask/lisNewtByPublish', {
+    this.$http.get('/bask/lisNewtByPublish', {
       params: {
-        pageSize: this.pageSize,
-        pageIndex: this.currentPage
+        firstTags: ''
       }
     })
       .then(res => {
-        let resData = JSON.parse(JSON.stringify(res))
-        console.log('-------------', resData)
-        if (resData.resultCode === 200) {
-          this.dataList = resData.object
+        if (res.resultCode === 200) {
+          this.dataList = res.object
           this.currentPage++
         }
       })

@@ -6,8 +6,10 @@ axios.defaults.baseURL = 'https://192.168.1.234:8443/salt/salt2rice/'
 // axios.defaults.baseURL = '/salt/salt2rice/'
 const defaultParams = {
   pageIndex: 1,
-  pageSize: 5
+  pageSize: 10,
+  userID: 'a681438615584b7cabc0ec28813b3741'
 }
+axios.userID = 'a681438615584b7cabc0ec28813b3741'
 
 axios.interceptors.request.use(config => {
   // console.log('---------- http request ----------', config.url)
@@ -17,6 +19,10 @@ axios.interceptors.request.use(config => {
     } else {
       config.params.pageIndex || (config.params.pageIndex = defaultParams.pageIndex)
       config.params.pageSize || (config.params.pageSize = defaultParams.pageSize)
+      config.params.userID || (config.params.userID = defaultParams.userID)
+      if (config.params.userID === 'all') {
+        config.params.userID = ''
+      }
     }
   }
   return config

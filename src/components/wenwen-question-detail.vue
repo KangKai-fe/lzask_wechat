@@ -1,13 +1,17 @@
 <template>
   <div class="container" @click="checkWenWenDetail">
-    <div class="ww-con01">
-      {{ question.content }}
-    </div>
-    <answer class="ww-info" v-if="answer && answerUserInfo"
+    <dl class="det-list02">
+      <dt><lazy-img :src="questionUser.photo" :alt="questionUser.photoStr"></lazy-img></dt>
+      <dd>
+        <h4>{{ questionUser.showName }}</h4>
+        <p>{{ question.content }}</p>
+      </dd>
+    </dl>
+    <answer class="det-list03" v-if="answer && answerUserInfo"
       :answer="answer"
       :answerUserInfo="answerUserInfo"
     ></answer>
-    <dl class="multiple_answers ww-info" v-else-if="answerUsers">
+    <dl class="multiple_answers" v-else-if="answerUsers">
       <dt class="info-img01 info-img02">
         <a href="javascript: void(0);" v-for="user in answerUsers.slice(0, 3)" :key="user.ID"><img :src="user.photo" :alt="user.photoStr"></a>
         <strong v-if="answerUsers.length > 3" class="more02">…</strong>
@@ -18,7 +22,7 @@
     </dl>
     <status class="question_status"
       :createDate="question.publishDate"
-      :viewCount="viewCount"
+      :viewCount="questionInfo.question.viewCount"
       :zanCount="question.zanCount"
       :zanStatus="0"
       :questionID="questionInfo.questionID"
@@ -28,11 +32,11 @@
 
 <script>
 import SSStatus from './shaishai-status.vue'
-import WWAnswer from './wenwen-answer.vue'
 import LazyImg from './common-lazy-img.vue'
+import WWAnswer from './wenwen-answer.vue'
 
 export default {
-  name: 'ww-hot-question',
+  name: 'ww-question-detail',
   props: [ 'questionInfo' ],
   data () {
     return {
@@ -40,17 +44,7 @@ export default {
       answerUserInfo: this.questionInfo.answerUserInfo,
       answerUsers: this.questionInfo.answerUsers,
       question: this.questionInfo.question,
-      textAnswer: '',
-      viewCount: this.questionInfo.question.viewCount,
-      textAnswerTips: '点击查看回答'
-    }
-  },
-  computed: {
-    params () {
-      let params = {}
-      params.userID = this.$http.userID
-      params.answerID = this.answer.ID
-      return params
+      questionUser: this.questionInfo.askUserInfo
     }
   },
   methods: {
@@ -58,24 +52,6 @@ export default {
       const questionID = this.questionInfo.questionID
       const answerID = this.answer.ID
       location.href = '/wenwen-detail.html?questionID=' + questionID + '&answerID=' + answerID
-    },
-
-    showTextAnswer () {
-      this.textAnswerTips = '正在加载'
-      this.$http.get('/answer/getAnswer', {
-        params: this.params
-      })
-        .then(res => {
-          if (res.resultCode === 200) {
-            this.textAnswer = res.object.content
-            this.viewCount++
-          }
-          this.textAnswerTips = '点击查看回答'
-        })
-        .catch(err => {
-          console.log('------------- err -------------', err)
-          this.textAnswerTips = '点击查看回答'
-        })
     }
   },
   components: {
@@ -92,16 +68,9 @@ export default {
   border-bottom: 0.01rem solid #e1e1e1;
   background: #fff;
 }
-.ww-con01 {
-  font-size: 0.32rem;
-  line-height: 0.44rem;
-  padding: 0 0.48rem 0.25rem;
-}
-.ww-info {
-  width: auto;
-  height: auto;
-  padding: 0 0.48rem 0;
-  min-height: 0.8rem;
+.question_status {
+  margin: 0 0.25rem 0;
+  padding: 0.31rem 0.23rem 0.31rem !important;
 }
 .info-img01 {
   float: left;
@@ -116,7 +85,7 @@ export default {
   border-radius: 0.78rem;
   overflow: hidden;
   border: 0.02rem solid #fff;
-  box-shadow: 0.01rem 0.02rem 0.12rem #b0d7ff
+  box-shadow: 0.01rem 0.02rem 0.12rem #b0d7ff;
 }
 .info-txt01 {
   margin-left: 1.27rem;
@@ -134,61 +103,32 @@ export default {
   left: -0.16rem;
   border-bottom: none;
 }
-.question_status {
-  padding: 0.31rem 0.23rem 0.31rem !important;
-  margin: 0 0.25rem 0;
+.det-list02 {
+  width: auto;
+  padding: 0.3rem 0.25rem 0;
 }
-.info-img02 {
-  width: 2.06rem;
+.det-list02 dt {
+  width: 0.72rem;
+  height: 0.72rem;
+  border-radius: 0.7rem;
+  overflow: hidden;
+  float: left;
 }
-
-.info-img02 a {
-  position: absolute;
+.det-list02 dd {
+  margin-left: 0.9rem;
 }
-
-.info-img02 a:nth-of-type(1) {
-  z-index: 3;
-  left: 0;
-  top: 0;
-}
-
-.info-img02 a:nth-of-type(2) {
-  z-index: 2;
-  left: 0.5rem;
-  top: 0;
-}
-
-.info-img02 a:nth-of-type(3) {
-  z-index: 1;
-  left: 0.97rem;
-  top: 0;
-}
-
-.more02 {
-  color: #389aff;
+.det-list02 dd h4 {
   font-size: 0.3rem;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  z-index: 4;
-  height: 0.3rem;
-  line-height: 0.2rem
+  color: #969696;
+  font-weight: normal;
 }
-
-.info-txt02 {
-  margin-left: 2.1rem;
+.det-list02 dd p {
+  font-size: 0.32rem;
 }
-
-.info-txt02 p {
-  width: 3.2rem;
-  height: 0.7rem;
-  line-height: 0.7rem;
-  border-radius: 0.85rem;
-  text-align: center;
-  color: #fff;
-  font-size: 0.3rem;
-  background-color:#cabdd0;
-  background: -webkit-linear-gradient(left, #fec8c8, #81aedc);
+.det-list03 {
+  width: auto;
+  overflow: hidden;
+  padding: 0.3rem 0.25rem;
+  border-bottom: 0.01rem solid #e1e1e1;
 }
-
 </style>

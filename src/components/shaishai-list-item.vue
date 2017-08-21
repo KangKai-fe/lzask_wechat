@@ -29,10 +29,21 @@
         :picList="pictureList"
         :picStr="data.picStr"
       ></photos>
-      <voice-msg v-if="data.type === 2"
-        :url="data.url"
-        :soundTime="data.soundTime"
-      ></voice-msg>
+      <audio-player v-if="data.type === 2" class="simple_voice"
+        :source="'http://file.kuyinyun.com/group2/M00/EF/C0/rBBGelUPiWiACpYhAAQfE72-jHE679.mp3' || data.url"
+        @timeupdate="timeupdate"
+        @playing="playing"
+        @pause="pause"
+        @ended="ended"
+        @waiting="waiting"
+        @error="error"
+      >
+        <voice-msg
+          :url="data.url"
+          :soundTime="data.soundTime"
+          :tips="tips"
+        ></voice-msg>
+      </audio-player>
       <h3 class="ss-title01" v-else-if="!singlePicture">
         {{ data.content }}
       </h3>
@@ -42,6 +53,7 @@
         :viewCount="data.viewCount"
         :zanCount="data.zanCount"
         :zanStatus="data.zanStatus"
+        :baskID="data.ID"
       ></status>
     </div>
   </div>
@@ -52,6 +64,7 @@ import SSStatus from './shaishai-status.vue'
 import SSPhotos from './shaishai-photos.vue'
 import SSVoiceMsg from './shaishai-voice-msg.vue'
 import SSTags from './shaishai-tags.vue'
+import AudioPlayer from './audio-player.vue'
 
 export default {
   name: 'ss-list-item',
@@ -60,7 +73,8 @@ export default {
   data () {
     return {
       singlePicture: this.data.type === 1 && this.data.picList.length < 3,
-      pictureList: this.data.picList && this.data.picList.length >= 3 ? this.data.picList.slice(0, 3) : []
+      pictureList: this.data.picList && this.data.picList.length >= 3 ? this.data.picList.slice(0, 3) : [],
+      tips: ''
     }
   },
 
@@ -71,6 +85,23 @@ export default {
     checkDetail () {
       console.log(this.data.ID)
       location.href = '/shaishai-detail.html?baskID=' + this.data.ID
+    },
+    timeupdate (e) {
+    },
+    playing (e) {
+      this.tips = '正在播放'
+    },
+    pause (e) {
+      this.tips = '继续播放'
+    },
+    ended (e) {
+      this.tips = ''
+    },
+    waiting (e) {
+      this.tips = '正在加载'
+    },
+    error (e) {
+      console.log(e)
     }
   },
 
@@ -78,21 +109,85 @@ export default {
     'status': SSStatus,
     'tags': SSTags,
     'voice-msg': SSVoiceMsg,
-    'photos': SSPhotos
+    'photos': SSPhotos,
+    'audio-player': AudioPlayer
   }
 }
 </script>
 
 <style scoped>
-.ss-words01{width: auto;margin:0.21rem 0.25rem;background-color:#fff;overflow: hidden;border-radius: 0.05rem;}
-.ss-words01 .picList01{width: auto;overflow: hidden;padding:0.3rem 0.125rem 0.3rem 0.125rem;}
-.picList01 li{width:33.333%;float:left;}
-.picList01 li a{display:block;margin:0 0.125rem;}
-.picList01 li a span{width:100%;height:0;padding-bottom:100%;overflow:hidden}
-.ss-title01{font-size: 0.32rem;line-height: 0.44rem;padding:0 0.25rem 0.25rem;font-weight: normal;}
-.ss-words02{width: auto;overflow: hidden;}
-.ss-pics01{padding:0.25rem;}
-.ss-picList02{padding:0.25rem;width: auto;overflow: hidden;}
-.ss-picList02 dt{float:left;width: 2rem;height: 2rem; overflow: hidden;}
-.ss-picList02 dd{margin-left: 2.3rem;font-size: 0.32rem;line-height: 0.44rem;padding-top: 0.13rem;min-height:1.87rem;}
+
+.ss-words01 {
+  width: auto;
+  margin: 0.21rem 0.25rem;
+  background-color: #fff;
+  overflow: hidden;
+  border-radius: 0.05rem;
+}
+
+.ss-words01 .picList01 {
+  width: auto;
+  overflow: hidden;
+  padding: 0.3rem 0.125rem 0.3rem 0.125rem;
+}
+
+.picList01 li {
+  width: 33.333%;
+  float: left;
+}
+
+.picList01 li a {
+  display: block;
+  margin: 0 0.125rem;
+}
+
+.picList01 li a span {
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  overflow: hidden
+}
+
+.ss-title01 {
+  font-size: 0.32rem;
+  line-height: 0.44rem;
+  padding: 0 0.25rem 0.25rem;
+  font-weight: normal;
+}
+
+.ss-words02 {
+  width: auto;
+  overflow: hidden;
+}
+
+.ss-pics01 {
+  padding: 0.25rem;
+}
+
+.ss-picList02 {
+  padding: 0.25rem;
+  width: auto;
+  overflow: hidden;
+}
+
+.ss-picList02 dt {
+  float: left;
+  width: 2rem;
+  height: 2rem;
+  overflow: hidden;
+  background-size: cover;
+}
+
+.ss-picList02 dd {
+  margin-left: 2.3rem;
+  font-size: 0.32rem;
+  line-height: 0.44rem;
+  padding-top: 0.13rem;
+  min-height: 1.87rem;
+}
+
+.simple_voice:first-child {
+  margin-top: 0.27rem;
+}
+
 </style>

@@ -5,15 +5,24 @@
       :photo="comment.userInfo.photo"
     ></user>
     <div v-if="comment.content" class="c-word01">{{ comment.content }}</div>
-    <voice v-else-if="comment.fileName && comment.soundTime"
+    <audio-player v-else-if="comment.fileName && comment.soundTime"
+      :source="source"
+    >
+      <voice
+        :url="comment.fileName"
+        :soundTime="comment.soundTime"
+      ></voice>
+    </audio-player>
+    <!-- <voice v-else-if="comment.fileName && comment.soundTime"
       :url="comment.fileName"
       :soundTime="comment.soundTime"
-    ></voice>
+    ></voice> -->
     <status class="ll_status"
       :createDate="comment.createDate"
       :viewCount="comment.viewCount"
       :zanCount="comment.zanCount"
       :zanStatus="comment.zanStatus"
+      :discussID="comment.ID"
     ></status>
   </div>
 </template>
@@ -22,6 +31,7 @@
 import CommentUser from './comment-user.vue'
 import SSStatus from './shaishai-status.vue'
 import VoiceMsg from './shaishai-voice-msg.vue'
+import AudioPlayer from './audio-player.vue'
 
 export default {
   name: 'ss-author',
@@ -29,7 +39,13 @@ export default {
   components: {
     'user': CommentUser,
     'status': SSStatus,
-    'voice': VoiceMsg
+    'voice': VoiceMsg,
+    'audio-player': AudioPlayer
+  },
+  computed: {
+    source () {
+      return this.$http.defaults.baseURL + '/answer/getAudio?answerID=' + this.comment.fileName + '&userID=' + this.$http.userID
+    }
   }
 }
 </script>

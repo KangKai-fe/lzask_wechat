@@ -1,5 +1,5 @@
 <template>
-  <img :src="showSrc" :alt="alt">
+  <img :src="showSrc" :alt="alt || '用户头像'">
 </template>
 
 <script>
@@ -26,7 +26,7 @@ export default {
         this.showSrc = 'http://via.placeholder.com/100x100.png'
         break
       default:
-        this.showSrc = 'http://via.placeholder.com/30x30.png'
+        this.showSrc = '../../static/img/default_avatar.png'
         break
     }
 

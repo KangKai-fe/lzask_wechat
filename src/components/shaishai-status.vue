@@ -17,12 +17,25 @@ moment.locale('zh-cn')
 
 export default {
   name: 'ss-status',
-  props: [ 'createDate', 'viewCount', 'zanCount', 'zanStatus' ],
+  props: [ 'createDate', 'viewCount', 'zanCount', 'zanStatus', 'baskID', 'discussID', 'questionID' ],
   data () {
     return {
       isZan: this.zanStatus,
-      zanCountLocale: this.zanCount,
-      timeFromNow: moment(this.createDate).fromNow()
+      zanCountLocale: this.zanCount || 0,
+      requestUrl: ''
+    }
+  },
+  computed: {
+    timeFromNow () {
+      return moment(this.createDate).fromNow()
+    },
+    params () {
+      let params = {}
+      params.userID = this.$http.userID
+      params.baskID = this.baskID
+      params.discussID = this.discussID
+      params.questionID = this.questionID
+      return params
     }
   },
   methods: {
@@ -30,10 +43,35 @@ export default {
       if (this.isZan) {
         return
       }
-      // TODO ajax
-      // $emit zan
-      this.isZan = 1
+      this.isZan = true
       this.zanCountLocale++
+
+      if (this.baskID) {
+        this.requestUrl = '/bask/zan'
+      } else if (this.discussID) {
+        this.requestUrl = '/discuss/zan'
+      } else if (this.questionID) {
+        this.requestUrl = '/question/zan'
+      } else {
+        return
+      }
+
+      // request
+      this.$http.get(this.requestUrl, {
+        params: this.params
+      })
+        .then(res => {
+          if (res.resultCode !== 200) {
+            // this.isZan = false
+            // this.zanCountLocale--
+            console.log(res.resultMsg)
+          }
+        })
+        .catch(err => {
+          console.log('err', err)
+          this.isZan = false
+          this.zanCountLocale--
+        })
     }
   }
 }

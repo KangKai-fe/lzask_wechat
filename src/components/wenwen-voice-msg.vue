@@ -1,5 +1,5 @@
 <template>
-  <div class="c-voice01 ww-voice02">
+  <div class="c-voice01 ww-voice02" @click.stop="playVoice">
     <span class="times">点击播放</span>
     <strong class="voice01"><img src="../assets/img/voice.png"></strong>
   </div>
@@ -10,16 +10,16 @@ import moment from 'moment'
 moment.locale('zh-cn')
 
 export default {
-  name: 'ss-voice-msg',
-  props: [ 'soundTime', 'url' ],
+  name: 'ww-voice-msg',
+  props: [ 'soundTime', 'answerID' ],
   data () {
     return {
-      soundDuration: moment().hour(0).minutes(0).seconds(0).add(this.soundTime, 'seconds').format('H mm\' ss"')
+      soundDuration: moment().hour(0).minutes(0).seconds(0).milliseconds(0).add(this.soundTime, 'milliseconds').format('mm\' ss"')
     }
   },
   methods: {
     playVoice () {
-      console.log(this.url)
+      console.log(this.answerID)
     }
   }
 }

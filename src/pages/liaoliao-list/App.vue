@@ -33,16 +33,14 @@ import { Loadmore } from 'mint-ui'
 /* custom component */
 import ListItem from '../../components/liaoliao-list-item.vue'
 
-/* mock data */
-// import dataList from '../../mockdata/liaoliao-list'
-
 export default {
   name: 'app',
   data () {
     return {
       dataList: [],
       listAllLoaded: false,
-      topStatus: ''
+      topStatus: '',
+      currentPage: 1
     }
   },
   methods: {
@@ -51,22 +49,37 @@ export default {
     },
 
     listLoadTop () {
-      const firstItemId = this.dataList[0].id
-      setTimeout(() => {
-        for (let i = firstItemId; i > firstItemId - 5; i--) {
-          this.dataList.unshift({ id: i - 1 })
+      this.$http.get('/topic/listHistory', {
+        params: {
+          pageIndex: 1
         }
-        this.$refs.loadmoreItems.onTopLoaded()
-      }, 1000)
+      })
+        .then(res => {
+          if (res.resultCode === 200) {
+            this.dataList = res.object
+            this.currentPage = 2
+            this.listAllLoaded = false
+          }
+          this.$refs.loadmoreItems.onTopLoaded()
+        })
+        .catch(err => {
+          console.log('err', err)
+          this.$refs.loadmoreItems.onTopLoaded()
+        })
     },
 
     listLoadBottom () {
-      this.$http.get('/static/api/topic/listHistory.json')
+      this.$http.get('/topic/listHistory', {
+        params: {
+          pageIndex: this.currentPage
+        }
+      })
         .then(res => {
-          let resData = JSON.parse(JSON.stringify(res))
-          console.log(resData)
-          if (resData.success) {
-            this.dataList = this.dataList.concat(resData.object)
+          if (res.object.length > 0) {
+            this.dataList = this.dataList.concat(res.object)
+            this.currentPage++
+          } else {
+            this.listAllLoaded = true
           }
           this.$refs.loadmoreItems.onBottomLoaded()
         })
@@ -77,12 +90,15 @@ export default {
     }
   },
   created () {
-    this.$http.get('/static/api/topic/listHistory.json')
+    this.$http.get('/topic/listHistory', {
+      params: {
+        pageIndex: 1
+      }
+    })
       .then(res => {
-        let resData = JSON.parse(JSON.stringify(res))
-        console.log('-------------', resData)
-        if (resData.resultCode === 200) {
-          this.dataList = resData.object
+        if (res.resultCode === 200) {
+          this.dataList = res.object
+          this.currentPage++
         }
       })
       .catch(err => {
