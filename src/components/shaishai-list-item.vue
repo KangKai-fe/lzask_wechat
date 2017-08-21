@@ -30,7 +30,8 @@
         :picStr="data.picStr"
       ></photos>
       <audio-player v-if="data.type === 2" class="simple_voice"
-        :source="'http://file.kuyinyun.com/group2/M00/EF/C0/rBBGelUPiWiACpYhAAQfE72-jHE679.mp3' || data.url"
+        :source="audioUrl"
+        :soundTime="data.soundTime"
         @timeupdate="timeupdate"
         @playing="playing"
         @pause="pause"
@@ -38,11 +39,11 @@
         @waiting="waiting"
         @error="error"
       >
-        <voice-msg
+        <!-- <voice-msg
           :url="data.url"
           :soundTime="data.soundTime"
           :tips="tips"
-        ></voice-msg>
+        ></voice-msg> -->
       </audio-player>
       <h3 class="ss-title01" v-else-if="!singlePicture">
         {{ data.content }}
@@ -62,7 +63,7 @@
 <script>
 import SSStatus from './shaishai-status.vue'
 import SSPhotos from './shaishai-photos.vue'
-import SSVoiceMsg from './shaishai-voice-msg.vue'
+// import SSVoiceMsg from './shaishai-voice-msg.vue'
 import SSTags from './shaishai-tags.vue'
 import AudioPlayer from './audio-player.vue'
 
@@ -74,6 +75,7 @@ export default {
     return {
       singlePicture: this.data.type === 1 && this.data.picList.length < 3,
       pictureList: this.data.picList && this.data.picList.length >= 3 ? this.data.picList.slice(0, 3) : [],
+      audioUrl: this.data.url && this.data.url.replace(/audio/, 'audio_mp3').replace(/\.amr/, '.mp3'),
       tips: ''
     }
   },
@@ -89,16 +91,12 @@ export default {
     timeupdate (e) {
     },
     playing (e) {
-      this.tips = '正在播放'
     },
     pause (e) {
-      this.tips = '继续播放'
     },
     ended (e) {
-      this.tips = ''
     },
     waiting (e) {
-      this.tips = '正在加载'
     },
     error (e) {
       console.log(e)
@@ -108,7 +106,7 @@ export default {
   components: {
     'status': SSStatus,
     'tags': SSTags,
-    'voice-msg': SSVoiceMsg,
+    // 'voice-msg': SSVoiceMsg,
     'photos': SSPhotos,
     'audio-player': AudioPlayer
   }

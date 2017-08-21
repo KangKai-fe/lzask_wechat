@@ -12,11 +12,11 @@
       <div class="ques-article01" v-if="item.type === 1">
         {{ item.content }}
       </div>
-      <voice-msg v-if="item.type === 2"
-        :url="item.url"
+      <audio-player v-if="item.type === 2" style="margin: 0 0.25rem;"
+        :source="item.url.replace(/audio/, 'audio_mp3').replace(/\.amr/, '.mp3')"
         :soundTime="item.soundTime"
-        style="margin: 0 0.25rem;"
-      ></voice-msg>
+      >
+      </audio-player>
       <div class="ques-article01" v-else-if="item.type === 3" style="padding-bottom:0">
         <span class="article-img"><img :src="item.url" :alt="item.content"></span>
       </div>
@@ -25,13 +25,13 @@
 </template>
 
 <script>
-import SSVoiceMsg from './shaishai-voice-msg.vue'
+import AudioPlayer from './audio-player.vue'
 
 export default {
   name: 'ss-long',
   props: [ 'title', 'cover', 'childrenList' ],
   components: {
-    'voice-msg': SSVoiceMsg
+    'audio-player': AudioPlayer
   }
 }
 </script>

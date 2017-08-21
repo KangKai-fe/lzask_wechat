@@ -1,5 +1,5 @@
 <template>
-  <div class="container" @click="checkWenWenDetail">
+  <div class="container">
     <dl class="det-list02">
       <dt><lazy-img :src="questionUser.photo" :alt="questionUser.photoStr"></lazy-img></dt>
       <dd>
@@ -45,13 +45,6 @@ export default {
       answerUsers: this.questionInfo.answerUsers,
       question: this.questionInfo.question,
       questionUser: this.questionInfo.askUserInfo
-    }
-  },
-  methods: {
-    checkWenWenDetail () {
-      const questionID = this.questionInfo.questionID
-      const answerID = this.answer.ID
-      location.href = '/wenwen-detail.html?questionID=' + questionID + '&answerID=' + answerID
     }
   },
   components: {

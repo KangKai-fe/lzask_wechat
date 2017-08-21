@@ -86,6 +86,7 @@ export default {
             this.toastMsg = '评论成功'
             this.toastType = ''
             this.replyContent = ''
+            this.$emit('commentSucceed', res.object)
           } else {
             this.toastMsg = '评论失败, 请重试'
             this.toastType = 'cancel'

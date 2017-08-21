@@ -3,8 +3,19 @@
     <!-- shaishai content -->
     <div class="question01">
       <author v-if="ssDetail.userInfo" :userInfo="ssDetail.userInfo"></author>
-      <content-long v-if="ssDetail.childrenList && ssDetail.childrenList.length" :title="ssDetail.content" :cover="ssDetail.photoUrl" :childrenList="ssDetail.childrenList"></content-long>
-      <content-short v-if="ssDetail.picList && ssDetail.picList.length" :content="ssDetail.content" :picList="ssDetail.picList" :picStr="ssDetail.picStr" :type="ssDetail.type" :soundTime="ssDetail.soundTime"></content-short>
+      <content-long v-if="ssDetail.childrenList && ssDetail.childrenList.length"
+        :title="ssDetail.content"
+        :cover="ssDetail.photoUrl"
+        :childrenList="ssDetail.childrenList"
+      ></content-long>
+      <content-short v-if="ssDetail.picList && ssDetail.picList.length"
+        :content="ssDetail.content"
+        :url="ssDetail.url"
+        :picList="ssDetail.picList"
+        :picStr="ssDetail.picStr"
+        :type="ssDetail.type"
+        :soundTime="ssDetail.soundTime"
+      ></content-short>
       <tags v-if="ssDetail.tagStr && ssDetail.tagStr !== ''" :tagStr="ssDetail.tagStr"></tags>
       <status v-if="ssDetail.createDate"
         :createDate="ssDetail.createDate"
@@ -34,6 +45,7 @@
       :replyCommentID="replyCommentID"
       :replyPlaceholder="replyPlaceholder"
       @areaBlur="areaBlur"
+      @commentSucceed="commentSucceed"
      ></comment-area>
   </div>
 </template>
@@ -63,14 +75,16 @@ export default {
       baskID: '',
       replyCommentID: '',
       replyPlaceholder: '',
-      commentsBtnMoreShow: false
+      commentsBtnMoreShow: false,
+      commentTargetObj: null
     }
   },
   computed: {
   },
   methods: {
-    replyComment (commentID, replyUserName) {
+    replyComment (commentID, replyUserName, commentObj) {
       this.replyCommentID = commentID
+      this.commentTargetObj = commentObj
       if (replyUserName) {
         this.replyPlaceholder = '回复:' + replyUserName
       } else {
@@ -100,6 +114,21 @@ export default {
       console.log('father blur')
       // this.replyCommentID = ''
       // this.replyPlaceholder = ''
+    },
+    commentSucceed (commentRes) {
+      let comment = {}
+      comment = commentRes
+      comment.userInfo = {}
+      comment.userInfo.ID = this.$http.userID
+      comment.userInfo.showName = this.$http.userName
+      comment.userInfo.photo = this.$http.userPhoto
+      comment.userInfo.accountBalance = {}
+      comment.userInfo.accountBalance.grade = this.$http.userGrade
+      if (this.commentTargetObj) {
+        comment.parentComment = this.commentTargetObj
+      }
+      this.commentsList.unshift(comment)
+      this.ssDetail.commentCount++
     }
   },
 

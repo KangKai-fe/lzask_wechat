@@ -10,6 +10,9 @@ const defaultParams = {
   userID: 'a681438615584b7cabc0ec28813b3741'
 }
 axios.userID = 'a681438615584b7cabc0ec28813b3741'
+axios.userName = '游客3050873'
+axios.userPhoto = '../static/img/default_avatar.png'
+axios.userGrade = '1'
 
 axios.interceptors.request.use(config => {
   // console.log('---------- http request ----------', config.url)

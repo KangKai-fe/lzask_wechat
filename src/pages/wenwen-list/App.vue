@@ -102,7 +102,6 @@ export default {
     })
       .then(res => {
         if (res.resultCode === 200) {
-          console.log(res.object)
           this.questionsList = res.object
         }
       })

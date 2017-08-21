@@ -5,9 +5,12 @@
       <span class="grade" v-if="answerUserInfo.accountBalance.grade">Lv.{{ answerUserInfo.accountBalance.grade }}</span>
     </dt>
     <dd class="info-txt01">
-      <voice-msg v-if="answer.fileName && answer.soundTime"
+      <audio-player v-if="answer.fileName && answer.soundTime"
+        :source="audioSource"
         :answerID="answer.ID"
-      ></voice-msg>
+        type="wenwen"
+      >
+      </audio-player>
       <div v-else-if="answer.content">{{ answer.content }}</div>
       <text-msg  v-else
         :answerID="answer.ID"
@@ -18,16 +21,22 @@
 
 <script>
 import LazyImg from './common-lazy-img.vue'
-import WWVoice from './wenwen-voice-msg.vue'
+// import WWVoice from './wenwen-voice-msg.vue'
 import WWText from './wenwen-text-msg.vue'
+import AudioPlayer from './audio-player.vue'
 
 export default {
   name: 'ww-answer',
   props: [ 'answerUserInfo', 'answer' ],
+  data () {
+    return {
+      audioSource: this.answer.soundTime ? (this.$http.defaults.baseURL + '/answer/getAudio?answerID=' + this.answer.ID + '&userID=' + this.$http.userID) : ''
+    }
+  },
   components: {
-    'voice-msg': WWVoice,
     'text-msg': WWText,
-    'lazy-img': LazyImg
+    'lazy-img': LazyImg,
+    'audio-player': AudioPlayer
   }
 }
 </script>
@@ -52,16 +61,5 @@ export default {
   margin-left: 1.27rem;
   position: relative;
   font-size: 0.3rem;
-}
-.info-txt01 .c-voice01:before {
-  content: '';
-  width: 0;
-  height: 0;
-  border-top: 0.21rem solid #fdc8c8;
-  border-left: 0.18rem solid transparent;
-  position: absolute;
-  top: 0.33rem;
-  left: -0.16rem;
-  border-bottom: none;
 }
 </style>

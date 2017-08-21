@@ -16,7 +16,7 @@
       <comment v-for="comment in commentsList"
         :key="comment.ID"
         :comment="comment"
-        @click.stop.native="commentClicked(comment.ID, comment.userInfo.showName)"
+        @click.stop.native="commentClicked(comment.ID, comment.userInfo.showName, comment)"
         @parentClicked="parentClicked"
       ></comment>
       <div class="readMore" @click="showMore" v-if="btnMoreShow">
@@ -35,15 +35,15 @@ export default {
     showMore () {
       this.$emit('commentCheckMore')
     },
-    commentClicked (commentID, replyUserName) {
+    commentClicked (commentID, replyUserName, commentObj) {
       console.log('reply comment')
-      this.$emit('commentClicked', commentID, replyUserName)
+      this.$emit('commentClicked', commentID, replyUserName, commentObj)
     },
-    parentClicked (commentID, replyUserName) {
-      this.$emit('commentClicked', commentID, replyUserName)
+    parentClicked (commentID, replyUserName, parentComment) {
+      this.$emit('commentClicked', commentID, replyUserName, parentComment)
     },
     replyBtnClickd () {
-      this.$emit('commentClicked', '', '')
+      this.$emit('commentClicked', '', null)
     }
   },
   created () {
