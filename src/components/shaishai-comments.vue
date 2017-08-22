@@ -2,7 +2,9 @@
   <div class="comment02">
     <div class="com02_title">评论
       <span>{{ commentsCount }}</span>
-      <div class="btn_comment" @click.stop="replyBtnClickd">
+      <div class="btn_comment" v-if="btnReplyShow"
+        @click.stop="replyBtnClickd"
+      >
         <i class="iconfont icon-icon"></i>
         写评论
       </div>
@@ -30,12 +32,15 @@
 import SSComment from './shaishai-comment.vue'
 export default {
   name: 'ss-comments',
-  props: [ 'commentsList', 'commentsCount', 'btnMoreShow' ],
+  props: [ 'commentsList', 'commentsCount', 'btnMoreShow', 'btnReplyShow' ],
   methods: {
     showMore () {
       this.$emit('commentCheckMore')
     },
     commentClicked (commentID, replyUserName, commentObj) {
+      if (commentObj.userID === this.$http.userID) {
+        return
+      }
       console.log('reply comment')
       this.$emit('commentClicked', commentID, replyUserName, commentObj)
     },

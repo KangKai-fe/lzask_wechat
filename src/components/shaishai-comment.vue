@@ -82,6 +82,9 @@ export default {
         })
     },
     parentClicked () {
+      if (this.comment.parentComment.userID === this.$http.userID) {
+        return
+      }
       console.log('reply parent comment')
       this.$emit('parentClicked', this.comment.parentComment.ID, this.comment.parentComment.userInfo.showName, this.comment.parentComment)
     }

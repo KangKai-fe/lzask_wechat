@@ -11,15 +11,9 @@
       :answer="answer"
       :answerUserInfo="answerUserInfo"
     ></answer>
-    <dl class="multiple_answers" v-else-if="answerUsers">
-      <dt class="info-img01 info-img02">
-        <a href="javascript: void(0);" v-for="user in answerUsers.slice(0, 3)" :key="user.ID"><img :src="user.photo" :alt="user.photoStr"></a>
-        <strong v-if="answerUsers.length > 3" class="more02">…</strong>
-      </dt>
-      <dd class="info-txt01 info-txt02">
-        <p>共{{ answerUsers.length }}个人回答</p>
-      </dd>
-    </dl>
+    <multiple-answer class="det-list03" v-else-if="answerUsers"
+      :answerUsers="answerUsers"
+    ></multiple-answer>
     <status class="question_status"
       :createDate="question.publishDate"
       :viewCount="questionInfo.question.viewCount"
@@ -34,6 +28,7 @@
 import SSStatus from './shaishai-status.vue'
 import LazyImg from './common-lazy-img.vue'
 import WWAnswer from './wenwen-answer.vue'
+import WWAnswerMultiple from './wenwen-answer-multiple.vue'
 
 export default {
   name: 'ww-question-detail',
@@ -50,6 +45,7 @@ export default {
   components: {
     'status': SSStatus,
     'answer': WWAnswer,
+    'multiple-answer': WWAnswerMultiple,
     'lazy-img': LazyImg
   }
 }
@@ -64,37 +60,6 @@ export default {
 .question_status {
   margin: 0 0.25rem 0;
   padding: 0.31rem 0.23rem 0.31rem !important;
-}
-.info-img01 {
-  float: left;
-  position: relative;
-  width: 0.8rem;
-  height: 0.8rem;
-}
-.info-img01 a {
-  display: block;
-  width: 0.76rem;
-  height: 0.76rem;
-  border-radius: 0.78rem;
-  overflow: hidden;
-  border: 0.02rem solid #fff;
-  box-shadow: 0.01rem 0.02rem 0.12rem #b0d7ff;
-}
-.info-txt01 {
-  margin-left: 1.27rem;
-  position: relative;
-  font-size: 0.3rem;
-}
-.info-txt01 .c-voice01:before {
-  content: '';
-  width: 0;
-  height: 0;
-  border-top: 0.21rem solid #fdc8c8;
-  border-left: 0.18rem solid transparent;
-  position: absolute;
-  top: 0.33rem;
-  left: -0.16rem;
-  border-bottom: none;
 }
 .det-list02 {
   width: auto;

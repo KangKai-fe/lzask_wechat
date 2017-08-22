@@ -58,8 +58,9 @@ export default {
   data () {
     return {
       soundTimeLeft: this.soundTime,
-      tips: '点击播放',
-      loadError: false
+      tips: this.soundTime ? '' : '点击播放',
+      loadError: false,
+      percentageLeft: 1
     }
   },
   methods: {
@@ -75,9 +76,9 @@ export default {
     },
     _timeupdate (e) {
       this.$emit('timeupdate', e)
-      let percentageLeft = (e.srcElement.duration - e.srcElement.currentTime) / e.srcElement.duration
+      this.percentageLeft = (e.srcElement.duration - e.srcElement.currentTime) / e.srcElement.duration
       // console.log(percentageLeft)
-      this.soundTimeLeft = percentageLeft > 0 ? (this.soundTime * percentageLeft) : 0
+      this.soundTimeLeft = this.percentageLeft > 0 ? (this.soundTime * this.percentageLeft) : 0
       // console.log('left', this.soundTimeLeft)
     },
     _playing (e) {
@@ -85,15 +86,21 @@ export default {
       this._stopOther(e.target.parentElement)
       if (this.soundTime) {
         this.tips = ''
-        this.soundTimeLeft = this.soundTime
       } else {
         this.tips = '正在播放'
       }
+      // if (this.soundTime) {
+      //   this.tips = ''
+      //   this.percentageLeft = this.soundTime * this.percentageLeft
+      // } else {
+      //   this.tips = '正在播放'
+      // }
     },
     _pause (e) {
       this.$emit('pause', e)
       if (!this.loadError) {
         this.tips = '继续播放'
+        // this.soundTimeLeft = 0
       }
     },
     _waiting (e) {
@@ -102,7 +109,9 @@ export default {
       this.soundTimeLeft = null
     },
     _ended (e) {
-      this.tips = '点击播放'
+      if (!this.soundTime) {
+        this.tips = '点击播放'
+      }
       this.soundTimeLeft = this.soundTime
       this.$emit('ended', e)
     },

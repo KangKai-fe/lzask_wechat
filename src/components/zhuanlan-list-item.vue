@@ -44,11 +44,6 @@ export default {
       type: String,
       default: '../../static/img/zl01.png'
     }
-  },
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
   }
 }
 </script>

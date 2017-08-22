@@ -1,7 +1,7 @@
 <template>
   <div class="c-voice01" @click="playVoice">
-    <span class="times" v-if="soundTime">{{ soundDuration }}</span>
-    <span class="times" v-else>{{ tips }}</span>
+    <span class="times" v-if="tips">{{ tips }}</span>
+    <span class="times" v-else>{{ soundDuration }}</span>
     <strong class="voice01"><img src="../assets/img/voice.png" alt=""></strong>
   </div>
 </template>

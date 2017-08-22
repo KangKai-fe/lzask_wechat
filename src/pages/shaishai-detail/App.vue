@@ -34,6 +34,7 @@
       :commentsList="commentsList"
       :commentsCount="ssDetail.commentCount"
       :btnMoreShow="commentsBtnMoreShow"
+      :btnReplyShow="commentsBtnReplyShow"
       @commentClicked="replyComment"
       @commentCheckMore="getAllComments"
       @replyBtnClickd="replyComment"
@@ -76,6 +77,7 @@ export default {
       replyCommentID: '',
       replyPlaceholder: '',
       commentsBtnMoreShow: false,
+      commentsBtnReplyShow: false,
       commentTargetObj: null
     }
   },
@@ -150,6 +152,9 @@ export default {
           this.related = res.object.related
           if (res.object.commentCount > 3) {
             this.commentsBtnMoreShow = true
+          }
+          if (res.object.userID !== this.$http.userID) {
+            this.commentsBtnReplyShow = true
           }
         }
       })
