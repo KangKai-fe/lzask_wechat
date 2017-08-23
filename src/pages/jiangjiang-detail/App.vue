@@ -1,21 +1,24 @@
 <template>
   <div :class="{ container_padded: commentable }">
     <!-- shaishai content -->
-    <div class="spearkDetail_banner">
-        <span class="banner_img02"><img src="images/jj03.png" alt=""></span>
-        <div class="jj-txt02 jjBanner_title01">
-            <h3><a href="#">
-                摄影用光的奥秘，拍出好照片的必修课</a>
-            </h3>
+    <div class="spearkDetail_banner" v-if="jjDetail">
+        <img class="jj_photo" src="../../assets/img/jj03.png" alt="">
+        <div class="jj-txt02">
+            <h3>摄影用光的奥秘，拍出好照片的必修课</h3>
             <p>孟克柔<span>|</span>知名摄影师11年影视摄影经验</p>
         </div>
     </div>
 
-    <!-- related recommend -->
-    <related v-if="related !== {}" :related="related"></related>
+    <!-- author info -->
+    <author class="author_info" v-if="jjDetail"
+      :userID="jjDetail.userInfo.ID"
+      :userName="jjDetail.userInfo.showName"
+      :userIdentity="jjDetail.userInfo.summary"
+      :photo="jjDetail.userInfo.photo"
+    ></author>
 
     <!-- comment list -->
-    <comments class="comments"
+    <comments class="comments" v-if="commentsList && commentsList.length"
       :commentsList="commentsList"
       :commentsCount="ssDetail.commentCount"
       :btnMoreShow="commentsBtnMoreShow"
@@ -27,7 +30,6 @@
 
     <!-- comment area -->
      <comment-area v-if="commentable"
-      :baskID="baskID"
       :replyCommentID="replyCommentID"
       :replyPlaceholder="replyPlaceholder"
       @areaBlur="areaBlur"
@@ -41,7 +43,7 @@
 import { querystring } from 'vux'
 
 /* custom component */
-import Author from '../../components/shaishai-author.vue'
+import Author from '../../components/user-info-brief.vue'
 import SSLong from '../../components/shaishai-content-long.vue'
 import SSShort from '../../components/shaishai-content-short.vue'
 import SSStatus from '../../components/shaishai-status.vue'
@@ -50,15 +52,18 @@ import SSRelated from '../../components/shaishai-related.vue'
 import SSComments from '../../components/shaishai-comments.vue'
 import CommentArea from '../../components/comment-area.vue'
 
+/* mockdata */
+import JJDetail from '../../mockdata/jiangjiang-detail-info'
+
 export default {
   name: 'app',
   data () {
     return {
-      ssDetail: {},
+      jjDetail: null,
       commentsList: [],
       related: {},
       commentable: true,
-      baskID: '',
+      subjectID: '',
       replyCommentID: '',
       replyPlaceholder: '',
       commentsBtnMoreShow: false,
@@ -67,6 +72,13 @@ export default {
     }
   },
   computed: {
+    params () {
+      let params = {}
+      params.subjectID = this.subjectID || 'a0e0f2f3b551477faced93b9b26e42b0'
+      params.currentUserID = this.$http.userID
+      params.appClient = 3
+      return params
+    }
   },
   methods: {
     replyComment (commentID, replyUserName, commentObj) {
@@ -81,11 +93,7 @@ export default {
     },
     getAllComments () {
       this.$http.get('/baskComment/listByPublish', {
-        params: {
-          baskID: this.baskID,
-          currentUserID: this.$http.userID,
-          pageSize: this.ssDetail.commentCount
-        }
+        params: this.params
       })
         .then(res => {
           if (res.resultCode === 200) {
@@ -121,48 +129,41 @@ export default {
 
   created () {
     // 晒晒 id
-    const baskID = querystring.parse().baskID
-    const userID = this.$http.userID
-    this.baskID = baskID
-    // console.log(baskID)
+    const subjectID = querystring.parse().subjectID
+    this.subjectID = subjectID
+    this.jjDetail = JJDetail
 
-    this.$http.get('/bask/detail', {
-      params: {
-        baskID: baskID
-      }
-    })
-      .then(res => {
-        if (res.resultCode === 200) {
-          this.ssDetail = res.object
-          this.related = res.object.related
-          if (res.object.commentCount > 3) {
-            this.commentsBtnMoreShow = true
-          }
-          if (res.object.userID !== this.$http.userID) {
-            this.commentsBtnReplyShow = true
-          }
-        }
-      })
-      .catch(err => {
-        console.log('err', err)
-      })
+    // this.$http.get('/bask/detail', {
+    //   params: this.params
+    // })
+    //   .then(res => {
+    //     if (res.resultCode === 200) {
+    //       this.ssDetail = res.object
+    //       this.related = res.object.related
+    //       if (res.object.commentCount > 3) {
+    //         this.commentsBtnMoreShow = true
+    //       }
+    //       if (res.object.userID !== this.$http.userID) {
+    //         this.commentsBtnReplyShow = true
+    //       }
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.log('err', err)
+    //   })
 
-    /* comments */
-    this.$http.get('/baskComment/listByPublish', {
-      params: {
-        baskID: baskID,
-        currentUserID: userID,
-        pageSize: 3
-      }
-    })
-      .then(res => {
-        if (res.resultCode === 200) {
-          this.commentsList = res.object
-        }
-      })
-      .catch(err => {
-        console.log('err', err)
-      })
+    // /* comments */
+    // this.$http.get('/baskComment/listByPublish', {
+    //   params: this.params
+    // })
+    //   .then(res => {
+    //     if (res.resultCode === 200) {
+    //       this.commentsList = res.object
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.log('err', err)
+    //   })
   },
 
   components: {
@@ -178,24 +179,48 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .spearkDetail_banner {
   width: 100%;
+  margin-bottom: 0.2rem;
   overflow: hidden;
+  background: #fff;
 }
 
-.banner_img02 {
-  display: block;
-  width: 100%;
-  overflow: hidden;
-}
-
-.jjBanner_title01 {
+.jj-txt02 {
   width: auto;
   overflow: hidden;
-  padding: 0.25rem;
+  padding:0.25rem;
   margin-left: 0;
-  background-color: #fff;
+  background-color:#fff;
+  min-height: 1.2rem;
+}
+
+.jj-txt02 h3 {
+  font-size: 0.32rem;
+  height: 0.39rem;
+  line-height: 0.39rem;
+  overflow: hidden;
+  padding-top: 0.05rem;
+}
+
+.jj-txt02 p {
+  color: #969696;
+  font-size: 0.28rem;
+  padding: 0.05rem 0;
+}
+
+.jj-txt02 p span {
+  margin: 0 0.2rem;
+  color: #969696;
+}
+
+/* author info */
+.author_info {
+  width: auto;
+  overflow: hidden;
+  padding: 0.25rem !important;
   margin-bottom: 0.2rem;
 }
+
 </style>

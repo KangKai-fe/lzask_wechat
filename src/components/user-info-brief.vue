@@ -6,7 +6,7 @@
     <div class="user_txt">
       <h3>{{ userName }}</h3>
       <h4 class="user_identity">{{ userIdentity || schoolGrade }}</h4>
-      <h4>{{ followCount }}个粉丝</h4>
+      <h4 v-if="followCount">{{ followCount }}个粉丝</h4>
     </div>
     <div v-if="userID && hasFollowed !== undefined" class="user_gz"
       :class="{ 'active': hasFollowed }"
