@@ -103,7 +103,7 @@ export default {
         })
     },
     textareaBlur () {
-      console.log('child blur')
+      // console.log('child blur')
       this.$emit('areaBlur')
     }
   },

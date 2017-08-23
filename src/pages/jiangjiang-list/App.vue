@@ -8,17 +8,18 @@
       :bottom-all-loaded="listAllLoaded"
       ref="loadmoreItems"
     >
-      <!-- user info -->
-      <list-item v-for="user in dataList"
-        :key="user.ID"
-        :userID="user.ID"
-        :userName="user.showName"
-        :userIdentity="user.summary"
-        :schoolGrade="user.univName && user.grade && (user.univName + user.grade)"
-        :followCount="user.followCount"
-        :photo="user.photo"
-        :followStatus="user.followStatus"
-        :type="type"
+
+      <!-- jiangjiang list -->
+      <list-item v-for="item in dataList"
+        :key="item.ID"
+        :subjectID="item.ID"
+        :photo="item.photoUrl"
+        :photoName="item.photoFileName"
+        :soundTime="item.soundTime"
+        :jjTitle="item.title"
+        :viewCount="item.viewCount"
+        :zanCount="item.zanCount"
+        :zanStatus="item.zanStatus"
       ></list-item>
 
       <!-- no more data -->
@@ -33,30 +34,26 @@
 /* mint ui loadmore */
 import { Loadmore } from 'mint-ui'
 
-/* tools */
-import { querystring } from 'vux'
-
 /* custom component */
-import User from '../../components/user-info-brief.vue'
+import JJItem from '../../components/jiangjiang-list-item.vue'
 
 export default {
-  name: 'user',
+  name: 'app',
   data () {
     return {
       dataList: [],
       listAllLoaded: false,
       topStatus: '',
       currentPage: 1,
-      requestUrl: '',
-      newUserType: 1,
-      type: ''
+      requestUrl: '/talkSubject/listByPublish'
     }
   },
   computed: {
     params () {
       let params = {}
       params.pageIndex = this.currentPage
-      params.type = this.newUserType
+      params.pageSize = 5
+      params.userID = 'all'
       return params
     }
   },
@@ -110,26 +107,6 @@ export default {
     if (this.dataList.length) {
       return
     }
-    let pageTitle
-    const type = querystring.parse().type
-    this.type = type
-    switch (type) {
-      case 'hot':
-        pageTitle = '热门用户'
-        this.requestUrl = '/userInfo/listHotUser'
-        break
-      case 'new':
-        pageTitle = '新晋用户'
-        this.requestUrl = '/userInfo/listNewUser'
-        this.newUserType = 1
-        break
-      default:
-        pageTitle = '用户'
-        document.title = pageTitle
-        return
-    }
-    document.title = pageTitle
-
     this.currentPage = 1
     this.$http.get(this.requestUrl, {
       params: this.params
@@ -149,7 +126,7 @@ export default {
   },
 
   components: {
-    'list-item': User,
+    'list-item': JJItem,
     'mt-loadmore': Loadmore
   }
 }

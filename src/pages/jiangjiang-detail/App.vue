@@ -1,29 +1,14 @@
 <template>
   <div :class="{ container_padded: commentable }">
     <!-- shaishai content -->
-    <div class="question01">
-      <author v-if="ssDetail.userInfo" :userInfo="ssDetail.userInfo"></author>
-      <content-long v-if="ssDetail.childrenList && ssDetail.childrenList.length"
-        :title="ssDetail.content"
-        :cover="ssDetail.photoUrl"
-        :childrenList="ssDetail.childrenList"
-      ></content-long>
-      <content-short v-if="ssDetail.picList && ssDetail.picList.length"
-        :content="ssDetail.content"
-        :url="ssDetail.url"
-        :picList="ssDetail.picList"
-        :picStr="ssDetail.picStr"
-        :type="ssDetail.type"
-        :soundTime="ssDetail.soundTime"
-      ></content-short>
-      <tags v-if="ssDetail.tagStr && ssDetail.tagStr !== ''" :tagStr="ssDetail.tagStr"></tags>
-      <status v-if="ssDetail.createDate"
-        :createDate="ssDetail.createDate"
-        :viewCount="ssDetail.viewCount"
-        :zanCount="ssDetail.zanCount"
-        :zanStatus="ssDetail.zanStatus"
-        :baskID="ssDetail.ID"
-      ></status>
+    <div class="spearkDetail_banner">
+        <span class="banner_img02"><img src="images/jj03.png" alt=""></span>
+        <div class="jj-txt02 jjBanner_title01">
+            <h3><a href="#">
+                摄影用光的奥秘，拍出好照片的必修课</a>
+            </h3>
+            <p>孟克柔<span>|</span>知名摄影师11年影视摄影经验</p>
+        </div>
     </div>
 
     <!-- related recommend -->
@@ -194,14 +179,23 @@ export default {
 </script>
 
 <style>
-.container_padded {
-  padding-bottom: 1.4rem;
-}
-.question01 {
-  background-color: #fff;
+.spearkDetail_banner {
+  width: 100%;
+  overflow: hidden;
 }
 
-.comments {
-  margin-top: 0.25rem;
+.banner_img02 {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+}
+
+.jjBanner_title01 {
+  width: auto;
+  overflow: hidden;
+  padding: 0.25rem;
+  margin-left: 0;
+  background-color: #fff;
+  margin-bottom: 0.2rem;
 }
 </style>

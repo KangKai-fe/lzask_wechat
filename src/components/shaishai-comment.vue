@@ -5,9 +5,7 @@
       <span class="grade" v-if="comment.userInfo.accountBalance">Lv.{{ comment.userInfo.accountBalance.grade }}</span>
     </dt>
     <dd>
-      <span class="zan02 zan" :class="{ active: isZan }" @click.stop="zan()">{{ zanCountLocale }}
-        <i class="iconfont">&#xe611;</i>
-      </span>
+      <span class="zan02 zan" :class="{ active: isZan }" @click.stop="zan()">{{ zanCountLocale }}</span>
       <h3 class="name02" v-if="comment.parentComment">
         <span class="app-txt01">
           {{ comment.userInfo.showName }}
@@ -132,36 +130,23 @@ export default {
 
 .zan02 {
   position: absolute;
-  height: 0.28rem;
-  line-height: 0.28rem;
-  padding-right: 0.35rem;
-  /*background:url(../images/zan02.png) no-repeat right center;*/
+  padding-right: 0.46rem;
+  background:url(../assets/img/icon_like.png) no-repeat right center;
   font-size: 0.24rem;
   color: #969696;
   right: 0.25rem;
   top: 0;
-  /*background-size: 0.28rem 0.28rem;*/
+  background-size: 0.36rem 0.36rem;
   line-height: 0.8rem;
+  height: 0.8rem;
   display: block;
-  height: 0.7rem;
-}
-
-.zan02 i {
-  color: #ccc;
-  margin-left: 0.1rem;
-  float: right;
-  margin-top: -0.03rem;
-  font-size: 0.28rem
 }
 
 .zan02.active {
   color: #ff8888;
-  /*background:url(../images/zan02_active.png) no-repeat right center;background-size: 0.28rem 0.28rem;*/
+  background-image: url(../assets/img/icon_liked.png);
 }
 
-.zan02.active i {
-  color: #ff8888;
-}
 
 .apply {
   border-left: 0.02rem solid #e1e1e1;

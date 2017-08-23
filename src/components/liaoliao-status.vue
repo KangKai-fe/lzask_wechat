@@ -3,7 +3,7 @@
     <span class="dates">{{ timeFromNow }}</span>
     <div class="remark_bottom">
       <span class="hots"><i class="iconfont">&#xe617;</i>{{ hotCount }}</span>
-      <span class="view"><i class="iconfont">&#xe618;</i>{{ viewCount }}</span>
+      <span class="discuss"><i class="iconfont">&#xe618;</i>{{ discussCount }}</span>
     </div>
   </div>
 </template>
@@ -14,7 +14,7 @@ moment.locale('zh-cn')
 
 export default {
   name: 'll-status',
-  props: [ 'publishDate', 'viewCount', 'hotCount', 'white' ],
+  props: [ 'publishDate', 'discussCount', 'hotCount', 'white' ],
   data () {
     return {
       isZan: this.zanStatus,
@@ -84,11 +84,8 @@ export default {
   margin-left: 0.2rem
 }
 
-.white-remarks .hots i {
-  color: #fff;
-}
-
-.white-remarks .view i {
+.white-remarks .hots i,
+.white-remarks .discuss i {
   color: #fff;
 }
 

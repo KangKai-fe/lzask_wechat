@@ -5,13 +5,13 @@
       <h3>{{ llInfo.title }}</h3>
       <status
         :publishDate="llInfo.publishDate"
-        :viewCount="llInfo.viewCount"
+        :discussCount="llInfo.discussCount"
         :hotCount="llInfo.hotCount"
       ></status>
     </div>
   </div>
   </div>
-</template>
+</template>\
 
 <script>
 import LLStatus from './liaoliao-status.vue'

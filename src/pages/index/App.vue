@@ -31,6 +31,10 @@ export default {
         {
           title: '专栏列表页',
           name: 'zhuanlan-list'
+        },
+        {
+          title: '讲讲列表页',
+          name: 'jiangjiang-list'
         }
       ]
     }

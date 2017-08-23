@@ -11,16 +11,24 @@
     <div v-if="userID && hasFollowed !== undefined" class="user_gz"
       :class="{ 'active': hasFollowed }"
       @click="followOrUnfollowUser"
-    ><a href="javascript: void(0);">
-      <span v-if="!hasFollowed">+</span>
-      <strong v-if="!hasFollowed">关注</strong>
-      <strong v-if="hasFollowed">取消</strong>
-    </a></div>
+    >
+      <a v-if="!hasFollowed" href="javascript: void(0);">
+        <img v-if="type === 'hot'" src="../assets/img/icon_follow_hot.png" alt="">
+        <img v-if="type === 'new'" src="../assets/img/icon_follow_new.png" alt="">
+      </a>
+      <a v-else href="javascript: void(0);">
+        <img src="../assets/img/icon_followed.png" alt="">
+        <!-- <icon v-if="hasFollowed" class="followed_icon" type="success-no-circle"></icon> -->
+        <!-- <strong v-if="hasFollowed">已关注</strong> -->
+      </a>
+    </div>
   </div>
 </template>
 
 <script>
 import LazyImg from './common-lazy-img.vue'
+import { Icon } from 'vux'
+
 export default {
   name: 'userinfo-brief',
   props: {
@@ -30,7 +38,8 @@ export default {
     schoolGrade: String,
     followCount: Number,
     photo: String,
-    followStatus: Number
+    followStatus: Number,
+    type: ''
   },
   data () {
     return {
@@ -72,7 +81,8 @@ export default {
     }
   },
   components: {
-    'lazy-img': LazyImg
+    'lazy-img': LazyImg,
+    Icon
   }
 }
 </script>
@@ -81,7 +91,6 @@ export default {
 .user {
   width: auto;
   padding: 0.4rem 0.25rem;
-  border-bottom: 0.01rem solid #e1e1e1;
   position: relative;
   display: flex;
   align-items: center;
@@ -123,33 +132,41 @@ export default {
   color: #969696;
 }
 .user_gz {
-  width: 1.18rem;
-  height: 0.58rem;
-  border: 0.01rem solid #80aedc;
-  color: #80aedc;
-  line-height: 0.6rem;
+  width: 1.30rem;
+  height: 0.56rem;
+  background: #80aedc;
+  line-height: 0.56rem;
   text-align: center;
-  border-radius: 0.05rem;
+  border-radius: 0.1rem;
 }
 .user_gz a {
   display: block;
   width: 100%;
   height: 100%;
   font-size: 0.24rem;
-  color: #80aedc;
   text-align: center;
+  color: #fff;
+}
+.user_gz a img {
+  width: 100%;
+  height: 100%;
 }
 .user_gz span {
-  color: #80aedc;
   margin-right: 0.05rem;
+  font-weight: bold;
 }
 .user_gz strong {
-  color: #80aedc;
+  font-weight: bold;
 }
 .user_gz.active {
-  background-color: #80aedc;
+  background: #ccc;
+  margin-right: 0;
 }
-.user_gz.active strong, .user_gz.active span {
+.followed_icon {
   color: #fff;
+  font-size: 0.8em;
+  font-weight: bold;
+  position: relative;
+  top: -0.03rem;
 }
 </style>

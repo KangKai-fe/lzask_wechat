@@ -1,12 +1,12 @@
 <template>
-  <div class="c-bottom01 ss-bottom01">
-    <span class="times01"><i class="iconfont">&#xe628;</i>{{ timeFromNow }}</span>
-    <span class="listen"><i class="iconfont">&#xe603;</i>{{ viewCount }}</span>
-    <span class="heart"
+  <div class="status">
+    <span class="time">{{ timeFromNow }}</span>
+    <span class="listen">{{ viewCount }}</span>
+    <span class="like"
       :class="{ active: isZan }"
       @click.stop="zan"
     >
-      <i class="iconfont">&#xe6a2;</i>{{ zanCountLocale }}
+      {{ zanCountLocale }}
     </span>
   </div>
 </template>
@@ -79,5 +79,43 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.ss-bottom01{padding:0 0.25rem 0.3rem;width: auto;}
+
+.status {
+  width: auto;
+  padding: 0 0.25rem 0.3rem;
+  font-size: 0.24rem;
+  text-align: center;
+}
+
+.status span {
+  color: #80aedc;
+  padding-left: 0.48rem;
+  height: 0.37rem;
+  line-height: 0.37rem;
+  background-size: 0.36rem 0.36rem;
+  background-position: left center;
+  background-repeat: no-repeat;
+}
+
+.time {
+  float: left;
+  background-image: url(../assets/img/icon_time.png);
+}
+
+.listen {
+  margin: 0 auto;
+  background-image: url(../assets/img/icon_view_head.png);
+  display: inline-block;
+}
+
+.like {
+  float: right;
+  margin-right: 0.2rem;
+  background-image: url(../assets/img/icon_like_circle.png);
+}
+
+.like.active {
+  color: #ff8888;
+  background-image: url(../assets/img/icon_liked_circle.png);
+}
 </style>

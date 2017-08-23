@@ -7,7 +7,7 @@
         </a>
         <status
           :publishDate="data.publishDate"
-          :viewCount="data.viewCount"
+          :discussCount="data.discussCount"
           :hotCount="data.hotCount"
           :white="true"
         ></status>

@@ -275,7 +275,7 @@ button {
     margin-top: -0.02rem;
 }
 
-.view i {
+.discuss i {
     margin-right: 0.08rem;
     font-size: 0.23rem;
     float: left;
@@ -396,52 +396,6 @@ button {
     top: 0.2rem;
     right: 0.36rem;
     display: block;
-}
-
-.c-bottom01 {
-    width: 100%;
-    padding: 0.4rem 0;
-    font-size: 0.24rem;
-    text-align: center;
-}
-
-.c-bottom01 span {
-    color: #80aedc;
-    /*padding-left:0.48rem;*/
-    height: 0.37rem;
-    line-height: 0.37rem;
-    /*background-size:0.36rem 0.36rem;*/
-}
-
-.c-bottom01 span i {
-    color: #ccd9e7;
-    float: left;
-    margin-right: 0.1rem;
-}
-
-.times01 {
-    float: left;
-    /*background:url(../images/times01.png) no-repeat left center;*/
-}
-
-.times01 i {
-    font-size: 0.39rem;
-}
-
-.listen {
-    margin: 0 auto;
-    /*background:url(../images/listen.png) no-repeat left center;*/
-    display: inline-block
-}
-
-.listen i {
-    font-size: 0.38rem;
-}
-
-.heart {
-    float: right;
-    margin-right: 0.2rem;
-    /*background:url(../images/heart.png) no-repeat left center;*/
 }
 
 .heart i {

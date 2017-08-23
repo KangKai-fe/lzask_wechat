@@ -1,7 +1,7 @@
 <template>
   <div class="users">
     <!-- title -->
-    <div class="User_title">
+    <div class="User_title" :class="{ 'hot': type === 'hot' }">
       <span @click="checkMoreUsers"><a href="javascript: void(0);">显示全部</a></span>
       <h3>
         <i class="iconfont" v-if="type === 'hot'">&#xe608;</i>
@@ -20,6 +20,7 @@
       :followCount="user.followCount"
       :photo="user.photo"
       :followStatus="user.followStatus"
+      :type="type"
     ></user>
   </div>
 </template>
@@ -91,5 +92,9 @@ export default {
   font-size: 0.35rem;
   color: #80aedc;
   margin-right: 0.12rem;
+}
+.User_title.hot h3,
+.User_title.hot .iconfont {
+  color: #f88;
 }
 </style>
