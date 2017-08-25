@@ -54,7 +54,7 @@
       :btnReplyShow="commentsBtnReplyShow"
       :replyForbidden="replyForbidden"
       @commentClicked="replyComment"
-      @commentCheckMore="getAllComments"
+      @commentCheckMore="getMoreComments"
       @replyBtnClickd="replyComment"
     ></comments>
 
@@ -80,9 +80,9 @@ import SSComments from '../../components/shaishai-comments.vue'
 import CommentArea from '../../components/comment-area.vue'
 
 /* mock data */
-import JJDetail from '../../mockdata/jiangjiang-detail-info'
-import JJAudios from '../../mockdata/jiangjiang-detail-audios'
-import JJComments from '../../mockdata/jiangjiang-detail-comments'
+// import JJDetail from '../../mockdata/jiangjiang-detail-info'
+// import JJAudios from '../../mockdata/jiangjiang-detail-audios'
+// import JJComments from '../../mockdata/jiangjiang-detail-comments'
 
 export default {
   name: 'app',
@@ -102,7 +102,8 @@ export default {
       commentsRequestUrl: '/talkComment/list',
       canPlayAudio: false,
       introAllShown: false,
-      replyForbidden: true
+      replyForbidden: true,
+      currentCommentPage: 1
     }
   },
   computed: {
@@ -111,6 +112,7 @@ export default {
       params.subjectID = this.subjectID || 'a62620660ff044d595b1afa04f62f944'
       params.currentUserID = this.$http.userID
       params.appClient = 3
+      params.pageIndex = this.currentCommentPage
       return params
     },
     audioUrlPrefix () {
@@ -152,14 +154,16 @@ export default {
       }
       console.log('target', this.replyCommentID)
     },
-    getAllComments () {
-      this.$http.get('/baskComment/listByPublish', {
+    getMoreComments () {
+      this.$http.get(this.commentsRequestUrl, {
         params: this.params
       })
         .then(res => {
           if (res.resultCode === 200) {
-            this.commentsList = res.object
-            this.commentsBtnMoreShow = false
+            this.commentsList = this.commentsList.concat(res.object)
+            if (res.object.length < 10) {
+              this.commentsBtnMoreShow = false
+            }
           }
         })
         .catch(err => {
@@ -193,62 +197,62 @@ export default {
     this.subjectID = subjectID
 
     // mock data
-    this.jjDetail = JJDetail
-    this.canPlayAudio = true
-    this.commentsList = JJComments
-    this.audioList = JJAudios
+    // this.jjDetail = JJDetail
+    // this.canPlayAudio = true
+    // this.commentsList = JJComments
+    // this.audioList = JJAudios
+
     // /* jiangjiang detail */
-    // this.$http.get('/talkSubject/detail', {
-    //   params: this.params
-    // })
-    //   .then(res => {
-    //     if (res.resultCode === 200) {
-    //       this.jjDetail = res.object
-    //       // if (res.object.userID !== this.$http.userID) {
-    //       //   this.commentsBtnReplyShow = true // 显示评论按钮
-    //       // } else {
-                // this.replyForbidden = false
-    // }
-    //       // 免费 || 已支付
-    //       if (res.object.price === 0 || (res.object.payStatus && res.object.payStatus.status === 1)) {
-    //         this.canPlayAudio = true
-    //       }
-    //     }
-    //   })
-    //   .catch(err => {
-    //     console.log('err', err)
-    //   })
+    this.$http.get('/talkSubject/detail', {
+      params: this.params
+    })
+      .then(res => {
+        if (res.resultCode === 200) {
+          this.jjDetail = res.object
+          // if (res.object.userID !== this.$http.userID) {
+          //   this.commentsBtnReplyShow = true // 显示评论按钮
+          // } else {
+          //   this.replyForbidden = false
+          // }
+          // 免费 || 已支付
+          if (res.object.price === 0 || (res.object.payStatus && res.object.payStatus.status === 1)) {
+            this.canPlayAudio = true
+          }
+        }
+      })
+      .catch(err => {
+        console.log('err', err)
+      })
 
-    // /* audio list */
-    // this.$http.get('/talkSection/list', {
-    //   params: this.params
-    // })
-    //   .then(res => {
-    //     if (res.resultCode === 200) {
-    //       this.audioList = res.object
-    //     }
-    //   })
-    //   .catch(err => {
-    //     console.log('err', err)
-    //   })
+    /* audio list */
+    this.$http.get('/talkSection/list', {
+      params: this.params
+    })
+      .then(res => {
+        if (res.resultCode === 200) {
+          this.audioList = res.object
+        }
+      })
+      .catch(err => {
+        console.log('err', err)
+      })
 
-    // /* comments */
-    // let commentParams = this.params
-    // commentParams.pageSize = 3
-    // this.$http.get(this.commentsRequestUrl, {
-    //   params: commentParams
-    // })
-    //   .then(res => {
-    //     if (res.resultCode === 200) {
-    //       this.commentsList = res.object
-    //       if (this.commentsList.length = 3) {
-    //         this.commentsBtnMoreShow = true
-    //       }
-    //     }
-    //   })
-    //   .catch(err => {
-    //     console.log('err', err)
-    //   })
+    /* comments */
+    this.$http.get(this.commentsRequestUrl, {
+      params: this.params
+    })
+      .then(res => {
+        if (res.resultCode === 200) {
+          this.commentsList = res.object
+          this.currentCommentPage++
+          if (this.commentsList.length === 10) {
+            this.commentsBtnMoreShow = true
+          }
+        }
+      })
+      .catch(err => {
+        console.log('err', err)
+      })
   },
 
   components: {
