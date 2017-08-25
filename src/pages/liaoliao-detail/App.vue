@@ -7,7 +7,7 @@
     <comments
       :commentsList="commentsList"
       :commentsCount="llDetail.discussCount"
-      :btnMoreShow="btnMoreShow"
+      :btnAllShow="btnAllShow"
       @checkMoreComments="getAllComments"
     ></comments>
   </div>
@@ -28,7 +28,7 @@ export default {
       topicID: '',
       llDetail: {},
       commentsList: [],
-      btnMoreShow: false
+      btnAllShow: false
     }
   },
   computed: {
@@ -44,7 +44,7 @@ export default {
         .then(res => {
           if (res.resultCode === 200) {
             this.commentsList = res.object
-            this.btnMoreShow = false
+            this.btnAllShow = false
           }
         })
         .catch(err => {
@@ -69,7 +69,7 @@ export default {
         if (res.resultCode === 200) {
           this.llDetail = res.object
           if (this.llDetail.discussCount > 3) {
-            this.btnMoreShow = true
+            this.btnAllShow = true
           }
         }
       })

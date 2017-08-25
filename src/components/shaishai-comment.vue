@@ -52,7 +52,15 @@ export default {
       let params = {}
       params.commentID = this.comment.ID
       params.userID = this.$http.userID
+      params.currentUserID = this.$http.userID
       return params
+    },
+    requestUrl () {
+      let url = '/baskComment/zan' // 默认晒晒评论点赞
+      if (this.comment.subjectID) { // 讲讲评论点赞
+        url = '/talkComment/createZan'
+      }
+      return url
     }
   },
   methods: {
@@ -63,7 +71,7 @@ export default {
       this.isZan = true
       this.zanCountLocale++
 
-      this.$http.get('/baskComment/zan', {
+      this.$http.get(this.requestUrl, {
         params: this.params
       })
         .then(res => {
@@ -136,7 +144,7 @@ export default {
   color: #969696;
   right: 0.25rem;
   top: 0;
-  background-size: 0.36rem 0.36rem;
+  background-size: 0.39rem 0.36rem;
   line-height: 0.8rem;
   height: 0.8rem;
   display: block;

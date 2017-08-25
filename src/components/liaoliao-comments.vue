@@ -22,7 +22,7 @@ import ModuleTitle from './module-title.vue'
 import LLComment from './liaoliao-comment.vue'
 
 export default {
-  name: 'ss-author',
+  name: 'll-comment',
   props: [ 'commentsList', 'commentsCount', 'btnMoreShow' ],
   methods: {
     showMore () {

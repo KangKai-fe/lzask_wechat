@@ -24,9 +24,9 @@
     <comments class="comments" v-if="questionInfo.answer && showWWComments"
       :commentsList="commentsList"
       :commentsCount="commentsTotalCount"
-      :btnMoreShow="commentsBtnMoreShow"
+      :btnAllShow="commentsBtnAllShow"
       @commentClicked="replyComment"
-      @commentCheckMore="getAllComments"
+      @commentCheckAll="getAllComments"
     ></comments>
 
     <!-- comment area -->
@@ -60,7 +60,7 @@ export default {
       answerID: '',
       replyCommentID: '',
       replyPlaceholder: '',
-      commentsBtnMoreShow: false,
+      commentsBtnAllShow: false,
       commentsTotalCount: 0,
       showWWComments: false
     }
@@ -84,7 +84,7 @@ export default {
         .then(res => {
           if (res.resultCode === 200) {
             this.commentsList = res.object
-            this.commentsBtnMoreShow = false
+            this.commentsBtnAllShow = false
           }
         })
         .catch(err => {
@@ -127,7 +127,7 @@ export default {
           const totalCount = res.page.count
           this.commentsTotalCount = totalCount
           if (totalCount > 3) {
-            this.commentsBtnMoreShow = true
+            this.commentsBtnAllShow = true
           }
         }
       })

@@ -9,7 +9,7 @@
       :source="source"
     >
       <voice
-        :url="comment.fileName"
+        :url="comment.ID"
         :soundTime="comment.soundTime"
       ></voice>
     </audio-player>

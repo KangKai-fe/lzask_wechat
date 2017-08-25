@@ -4,8 +4,8 @@
       :placeholder="placeholder"
       v-model="replyContent"
       @blur="textareaBlur"
-    >{{ replyContent }}</textarea>
-    <i class="iconfont icon-feiji" @click="reply"></i>
+    ></textarea>
+    <span class="icon_send" :class="{ 'active': readyToReply }" @click="reply"></span>
     <toast v-model="toastShow" :type="toastType">{{ toastMsg }}</toast>
   </div>
 </template>
@@ -16,8 +16,9 @@ import { Toast } from 'vux'
 export default {
   name: 'comment-area',
   props: {
-    baskID: String,
-    answerID: String,
+    baskID: String, // 晒晒评论
+    answerID: String, // 问问评论
+    subjectID: String, // 讲讲评论
     replyCommentID: String,
     replyPlaceholder: String
   },
@@ -38,6 +39,12 @@ export default {
         }, 300)
       }
       return this.replyPlaceholder || '在这里说点什么吧'
+    },
+    readyToReply () {
+      if (this.replyContent.length > 4 && this.replyContent.length <= 200) {
+        return true
+      }
+      return false
     }
   },
   methods: {
@@ -45,10 +52,13 @@ export default {
       if (!this.canReply) {
         return
       }
-      if (this.replyContent.length < 4) {
-        this.toastMsg = '字数太少'
+      if (!this.readyToReply) {
         if (!this.replyContent) {
           this.toastMsg = '不能为空'
+        } else if (this.replyContent.length < 4) {
+          this.toastMsg = '字数太少'
+        } else {
+          this.toastMsg = '字数太多'
         }
         this.toastShow = true
         this.toastType = 'cancel'
@@ -65,17 +75,21 @@ export default {
         content: this.replyContent
       }
       let replyUrl = ''
-      if (this.baskID) {
+      if (this.baskID) { // 晒晒
         params.baskID = this.baskID
-        if (this.replyCommentID) {
-          params.replyCommentID = this.replyCommentID
-        }
         replyUrl = '/baskComment/create'
-      } else if (this.answerID) {
+      } else if (this.answerID) { // 问问
         params.answerID = this.answerID
         replyUrl = '/answerdiscuss/create'
+      } else if (this.subjectID) { // 讲讲
+        params.subjectID = this.subjectID
+        replyUrl = '/talkComment/create'
       } else {
         return
+      }
+
+      if (this.replyCommentID) {
+        params.replyCommentID = this.replyCommentID
       }
 
       this.$http.get(replyUrl, {
@@ -139,7 +153,14 @@ textarea {
   flex: 1;
   margin-right: 0.3rem;
 }
-.icon-feiji {
-  font-size: 0.6rem;
+.icon_send {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.71rem;
+  background: url(../assets/img/icon_send.png) no-repeat center center;
+  background-size: cover;
+}
+.icon_send.active {
+  background-image: url(../assets/img/icon_send_blue.png);
 }
 </style>

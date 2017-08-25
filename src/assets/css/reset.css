@@ -452,3 +452,7 @@ button {
     font-size: 0.3rem;
     color: #646464;
 }
+
+.container_padded {
+  padding-bottom: 1.4rem;
+}

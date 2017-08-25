@@ -8,7 +8,7 @@ export default {
   props: [ 'pageTitle', 'pageName' ],
   data () {
     return {
-      link: '/' + this.pageName + '.html'
+      link: './' + this.pageName + '.html'
     }
   }
 }

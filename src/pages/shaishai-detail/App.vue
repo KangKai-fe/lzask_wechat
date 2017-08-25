@@ -33,10 +33,10 @@
     <comments class="comments"
       :commentsList="commentsList"
       :commentsCount="ssDetail.commentCount"
-      :btnMoreShow="commentsBtnMoreShow"
+      :btnAllShow="commentsBtnAllShow"
       :btnReplyShow="commentsBtnReplyShow"
       @commentClicked="replyComment"
-      @commentCheckMore="getAllComments"
+      @commentCheckAll="getAllComments"
       @replyBtnClickd="replyComment"
     ></comments>
 
@@ -76,7 +76,7 @@ export default {
       baskID: '',
       replyCommentID: '',
       replyPlaceholder: '',
-      commentsBtnMoreShow: false,
+      commentsBtnAllShow: false,
       commentsBtnReplyShow: false,
       commentTargetObj: null
     }
@@ -105,7 +105,7 @@ export default {
         .then(res => {
           if (res.resultCode === 200) {
             this.commentsList = res.object
-            this.commentsBtnMoreShow = false
+            this.commentsBtnAllShow = false
           }
         })
         .catch(err => {
@@ -151,7 +151,7 @@ export default {
           this.ssDetail = res.object
           this.related = res.object.related
           if (res.object.commentCount > 3) {
-            this.commentsBtnMoreShow = true
+            this.commentsBtnAllShow = true
           }
           if (res.object.userID !== this.$http.userID) {
             this.commentsBtnReplyShow = true

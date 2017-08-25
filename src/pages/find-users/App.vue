@@ -46,9 +46,6 @@ export default {
 </script>
 
 <style>
-.container_padded {
-  padding-bottom: 1.4rem;
-}
 .question01 {
   background-color: #fff;
 }

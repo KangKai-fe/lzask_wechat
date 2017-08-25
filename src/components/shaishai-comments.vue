@@ -21,8 +21,11 @@
         @click.stop.native="commentClicked(comment.ID, comment.userInfo.showName, comment)"
         @parentClicked="parentClicked"
       ></comment>
-      <div class="readMore" @click="showMore" v-if="btnMoreShow">
+      <div class="readMore" @click="showAll" v-if="btnAllShow">
         <a href="javascript: void(0);">查看全部</a>
+      </div>
+      <div class="readMore" @click="showMore" v-if="btnMoreShow">
+        <a href="javascript: void(0);">查看更多</a>
       </div>
     </div>
   </div>
@@ -32,19 +35,21 @@
 import SSComment from './shaishai-comment.vue'
 export default {
   name: 'ss-comments',
-  props: [ 'commentsList', 'commentsCount', 'btnMoreShow', 'btnReplyShow' ],
+  props: [ 'commentsList', 'commentsCount', 'btnAllShow', 'btnReplyShow', 'btnMoreShow', 'replyForbidden' ],
   methods: {
+    showAll () {
+      this.$emit('commentCheckAll')
+    },
     showMore () {
       this.$emit('commentCheckMore')
     },
     commentClicked (commentID, replyUserName, commentObj) {
-      if (commentObj.userID === this.$http.userID) {
-        return
-      }
+      if (commentObj.userID === this.$http.userID || this.replyForbidden) return
       console.log('reply comment')
       this.$emit('commentClicked', commentID, replyUserName, commentObj)
     },
     parentClicked (commentID, replyUserName, parentComment) {
+      if (this.replyForbidden) return
       this.$emit('commentClicked', commentID, replyUserName, parentComment)
     },
     replyBtnClickd () {

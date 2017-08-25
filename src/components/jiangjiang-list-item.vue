@@ -48,6 +48,7 @@ export default {
   overflow: hidden;
   display: block;
   position: relative;
+  background: #f5f5f5;
 }
 .container:last-child {
   border-bottom: none;
