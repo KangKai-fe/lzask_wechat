@@ -18,7 +18,7 @@
     ></author>
 
     <!-- jiangjiang introduction -->
-    <div class="gen">
+    <div class="gen" v-if="jjDetail">
       <h3>简介</h3>
       <p :class="{ 'intro_brief': !introAllShown }">{{ jjDetail.description }}</p>
       <span class="intro_show"
@@ -116,7 +116,8 @@ export default {
       return params
     },
     audioUrlPrefix () {
-      return this.jjDetail.audioUrl.replace(/audio/, 'audio_mp3')
+      // return this.jjDetail.audioUrl.replace(/audio/, 'audio_mp3')
+      return this.jjDetail.audioUrl.replace(/audio/, 'audio_mp3').replace(/http:\/\/192\.168\.1\.234:8080/, 'https://115.29.55.231:8443/')
     }
   },
   filters: {
@@ -335,6 +336,7 @@ export default {
 }
 .intro_brief {
   -webkit-line-clamp: 2;
+  transition: all 0.3 ease;
 }
 
 .intro_show {
@@ -344,10 +346,11 @@ export default {
   height: 0.2rem;
   background: url(../../assets/img/icon_show_more.png) no-repeat center center;
   background-size: cover;
+  transition: all 0.5s ease-out;
 }
 
 .intro_hide {
-  transform: rotateX(180deg)
+  transform: rotateZ(180deg);
 }
 
 /* sections */
@@ -357,11 +360,9 @@ export default {
   background-color: #fff;
 }
 
-.section {
+.sections > div {
   width: auto;
   overflow: hidden;
-  overflow: hidden;
-  padding-top: 0.5rem;
   border-bottom: 0.01rem solid #ccc;
 }
 
@@ -370,6 +371,7 @@ export default {
 }
 
 .section_title {
+  margin-top: 0.5rem;
   font-size: 0.36rem;
   font-weight: bold;
   padding-bottom: 0.2rem;

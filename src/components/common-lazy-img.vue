@@ -26,7 +26,7 @@ export default {
         this.showSrc = 'http://via.placeholder.com/100x100.png'
         break
       default:
-        this.showSrc = '../../static/img/default_avatar.png'
+        this.showSrc = window.defaultAvatar || '../../static/img/default_avatar.png'
         break
     }
 

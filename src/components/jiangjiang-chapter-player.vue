@@ -72,10 +72,10 @@ export default {
       let target = e.currentTarget
       let audio = target.querySelector('audio')
       if (audio.paused || audio.ended) {
-        e.target.parentElement.className = 'playing'
+        target.parentElement.className = 'playing'
         audio.play()
       } else {
-        e.target.parentElement.className = 'container'
+        target.parentElement.className = 'container'
         audio.pause()
       }
     },
@@ -161,15 +161,15 @@ export default {
   background-size: 0.2925rem 0.33rem;
 }
 
-.playing .arrow01 {
+.playing > .arrow01 {
   display: block;
 }
 
-.container p {
+.container > p {
   margin: 0 1.7rem 0 0.48rem;
 }
 
-.playing p {
+.playing > p {
   margin: 0 1rem 0 1rem;
 }
 

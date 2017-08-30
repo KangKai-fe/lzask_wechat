@@ -1,7 +1,7 @@
 <template>
   <dl class="com02-word">
     <dt class="photo_container">
-      <img :src="comment.userInfo.photo || '../../static/img/default_avatar.png'" alt="用户头像">
+      <img :src="comment.userInfo.photo || defaultAvatar" alt="用户头像">
       <span class="grade" v-if="comment.userInfo.accountBalance">Lv.{{ comment.userInfo.accountBalance.grade }}</span>
     </dt>
     <dd>
@@ -24,7 +24,7 @@
       <div class="apply" v-if="comment.parentComment" @click.stop="parentClicked">
         <div class="apply_title" v-if="comment.parentComment.userInfo">
           <span class="app-img photo_container">
-            <img :src="comment.parentComment.userInfo.photo || '../../static/img/default_avatar.png'" alt="用户头像">
+            <img :src="comment.parentComment.userInfo.photo || defaultAvatar" alt="用户头像">
             <span class="grade small" v-if="comment.parentComment.userInfo.accountBalance">Lv.{{ comment.parentComment.userInfo.accountBalance.grade }}</span>
           </span>
           <span class="app-txt01">{{ comment.parentComment.userInfo.showName }}</span>
@@ -44,7 +44,8 @@ export default {
   data () {
     return {
       isZan: this.comment.zanStatus,
-      zanCountLocale: this.comment.zanCount
+      zanCountLocale: this.comment.zanCount,
+      defaultAvatar: window.defaultAvatar || '../../static/img/default_avatar.png'
     }
   },
   computed: {

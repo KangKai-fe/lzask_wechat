@@ -1,18 +1,21 @@
 import axios from 'axios'
 
 /* axios */
-axios.defaults.baseURL = 'https://192.168.1.234:8443/salt/salt2rice/'
+axios.defaults.baseURL = window.baseUrl || 'https://192.168.1.234:8443/salt/salt2rice/'
 // dev api
 // axios.defaults.baseURL = '/salt/salt2rice/'
+const userID = window.userID || 'a681438615584b7cabc0ec28813b3741'
 const defaultParams = {
   pageIndex: 1,
   pageSize: 10,
-  userID: 'a681438615584b7cabc0ec28813b3741'
+  userID: userID
 }
-axios.userID = 'a681438615584b7cabc0ec28813b3741'
-axios.userName = '游客3050873'
-axios.userPhoto = '../static/img/default_avatar.png'
-axios.userGrade = '1'
+
+/* default user info */
+axios.userID = userID
+axios.userName = window.userName
+axios.userPhoto = window.userPhoto
+axios.userGrade = window.userGrade
 
 axios.interceptors.request.use(config => {
   // console.log('---------- http request ----------', config.url)
@@ -39,5 +42,25 @@ axios.interceptors.response.use(res => {
   // console.log('---------- http request failed ----------', err)
   return Promise.reject(err)
 })
+
+/* getting current userInfo */
+// axios.get('/userInfo/getUserInfo')
+//   .then((res) => {
+//     if (res.resultCode === 200) {
+//       const resObj = res.object
+//       axios.userID = userID
+//       axios.userName = resObj.showName
+//       axios.userPhoto = resObj.photo
+//       axios.userGrade = resObj.accountBalance && resObj.accountBalance.grade
+//       console.log('------ current userInfo ------')
+//       console.log(axios.userName)
+//       console.log(axios.userPhoto)
+//       console.log(axios.userGrade)
+//       console.log('------ current userInfo end ------')
+//     }
+//   })
+//   .catch((err) => {
+//     console.log('getting userInfo failed', err)
+//   })
 
 export default axios

@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     checkDetail () {
-      location.href = '/jiangjiang-detail.html?subjectID=' + this.subjectID
+      location.href = window.detailPathPrefix + '/jiangjiang-detail?subjectID=' + this.subjectID
     }
   }
 }
