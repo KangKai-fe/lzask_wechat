@@ -19,11 +19,11 @@ export default {
   created () {
     // init image placeholder
     switch (this.type) {
-      case 0:
-        this.showSrc = 'http://via.placeholder.com/325x163.png'
+      case 'banner':
+        this.showSrc = 'http://via.placeholder.com/350x200.png?text=loading...'
         break
       case 1:
-        this.showSrc = 'http://via.placeholder.com/100x100.png'
+        this.showSrc = 'http://via.placeholder.com/100x100.png?text=loading...'
         break
       default:
         this.showSrc = window.defaultAvatar || '../../static/img/default_avatar.png'

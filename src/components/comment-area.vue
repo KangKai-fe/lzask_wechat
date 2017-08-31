@@ -92,7 +92,7 @@ export default {
         params.replyCommentID = this.replyCommentID
       }
 
-      this.$http.get(replyUrl, {
+      this.$http.post(replyUrl, {
         params
       })
         .then(res => {

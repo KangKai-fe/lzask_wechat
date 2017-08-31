@@ -188,7 +188,7 @@ export default {
       if (this.commentTargetObj) {
         comment.parentComment = this.commentTargetObj
       }
-      this.commentsList.unshift(comment)
+      this.commentsList.push(comment)
     }
   },
 

@@ -52,10 +52,12 @@ export default {
   },
   methods: {
     checkMoreUser () {
-      location.href = 'find-users.html'
+      // location.href = 'find-users.html'
+      location.href = window.detailPathPrefix + '/find-users'
     },
     showMore () {
-      location.href = 'question-list.html'
+      // location.href = 'question-list.html'
+      location.href = window.detailPathPrefix + '/question-list'
     }/* ,
     handleTopChange (status) {
       this.topStatus = status

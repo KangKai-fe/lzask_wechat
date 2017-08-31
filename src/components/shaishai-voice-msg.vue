@@ -28,5 +28,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.ss-voice01 .c-voice01{margin:0.1rem 0.25rem 0.25rem;}
+.ss-voice01 .c-voice01 {
+  margin: 0.1rem 0.25rem 0.25rem;
+}
 </style>

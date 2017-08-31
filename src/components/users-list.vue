@@ -47,7 +47,8 @@ export default {
 
   methods: {
     checkMoreUsers () {
-      location.href = '/user-list.html?type=' + this.type
+      // location.href = '/user-list.html?type=' + this.type
+      location.href = window.detailPathPrefix + '/user-list?type=' + this.type
     }
   },
 

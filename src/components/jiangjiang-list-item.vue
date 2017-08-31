@@ -1,6 +1,7 @@
 <template>
   <div class="container" @click="checkDetail">
-      <img class="photo" :src="photo" :alt="photoName">
+      <!-- <img class="photo" :src="photo" :alt="photoName"> -->
+      <lazy-img class="photo" :src="photo" :alt="photoName" type="banner"></lazy-img>
       <h3 class="title">{{ jjTitle }}</h3>
       <div class="status">
           <span class="time">总时长{{ totalDuration }}min</span>
@@ -11,6 +12,7 @@
 
 <script>
 import moment from 'moment'
+import LazyImg from './common-lazy-img.vue'
 
 export default {
   name: 'userinfo-brief',
@@ -36,6 +38,9 @@ export default {
     checkDetail () {
       location.href = window.detailPathPrefix + '/jiangjiang-detail?subjectID=' + this.subjectID
     }
+  },
+  components: {
+    'lazy-img': LazyImg
   }
 }
 </script>

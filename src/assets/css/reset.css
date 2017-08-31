@@ -75,7 +75,6 @@ fieldset {
     margin: 0px;
     padding: 0px;
     /* color: #282828; */
-    -webkit-font-smoothing: subpixel-antialiased;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -103,6 +102,7 @@ a {
     outline: none;
     text-decoration: none;
     color: #323232;
+    -webkit-tap-highlight-color: none;
 }
 
 a:hover {
@@ -364,9 +364,6 @@ button {
     position: relative;
     background-color: #cabdd0;
     background: -webkit-linear-gradient(left, #fec8c8, #81aedc);
-    background: -o-linear-gradient(left, #fec8c8, #81aedc);
-    background: -moz-linear-gradient(left, #fec8c8, #81aedc);
-    background: -ms-linear-gradient(left, #fec8c8, #81aedc);
 }
 
 .c-voice01:before {
@@ -433,9 +430,6 @@ button {
     border-radius: 0.02rem;
     background-color: #ff6489;
     background: -webkit-linear-gradient(#fef5a6, #fed839);
-    background: -moz-linear-gradient(#fef5a6, #fed839);
-    background: -o-linear-gradient(#fef5a6, #fed839);
-    background: linear-gradient(#fef5a6, #fed839);
     color: #e72a02;
     line-height: 0.44rem;
     text-align: center;

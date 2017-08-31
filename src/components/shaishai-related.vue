@@ -19,7 +19,8 @@ export default {
   methods: {
     checkRelated () {
       if (this.related.type === 2) { // shaishai
-        location.href = '/shaishai-detail.html?baskID=' + this.related.ID
+        // location.href = '/shaishai-detail.html?baskID=' + this.related.ID
+        location.href = window.detailPathPrefix + '/shaishai-detail?baskID=' + this.related.ID
       }
     }
   },

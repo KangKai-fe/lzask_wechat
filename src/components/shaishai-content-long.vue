@@ -37,10 +37,32 @@ export default {
 </script>
 
 <style scoped>
-.ques-title02{font-size: 0.32rem;line-height: 0.48rem;color:#646464;padding:0.25rem 0.25rem 0 0.25rem;font-weight:bold}
-.article-img{display: block;width: 100%;overflow: hidden;padding:0.25rem 0;}
-.ss-voice02{margin:0 0.25rem}
-.ques-article01{padding:0.25rem;font-size: 0.3rem;line-height: 0.48rem;color:#646464;}
+.ques-title02 {
+  font-size: 0.32rem;
+  line-height: 0.48rem;
+  color: #646464;
+  padding: 0.25rem 0.25rem 0 0.25rem;
+  font-weight: bold
+}
+
+.article-img {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  padding: 0.25rem 0;
+}
+
+.ss-voice02 {
+  margin: 0 0.25rem
+}
+
+.ques-article01 {
+  padding: 0.25rem;
+  font-size: 0.3rem;
+  line-height: 0.48rem;
+  color: #646464;
+}
+
 .voice_content {
   margin: 0.25rem 0.25rem 0;
 }

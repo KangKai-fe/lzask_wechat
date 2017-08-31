@@ -52,7 +52,8 @@ export default {
     checkWenWenDetail () {
       const questionID = this.questionInfo.questionID
       const answerID = this.answer.ID
-      location.href = '/wenwen-detail.html?questionID=' + questionID + '&answerID=' + answerID
+      // location.href = '/wenwen-detail.html?questionID=' + questionID + '&answerID=' + answerID
+      location.href = window.detailPathPrefix + '/wenwen-detail?questionID=' + questionID + '&answerID=' + answerID
     },
 
     showTextAnswer () {

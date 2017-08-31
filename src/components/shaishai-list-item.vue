@@ -86,7 +86,8 @@ export default {
   methods: {
     checkDetail () {
       console.log(this.data.ID)
-      location.href = '/shaishai-detail.html?baskID=' + this.data.ID
+      // location.href = '/shaishai-detail.html?baskID=' + this.data.ID
+      location.href = window.detailPathPrefix + '/shaishai-detail?baskID=' + this.data.ID
     },
     timeupdate (e) {
     },

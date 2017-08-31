@@ -33,7 +33,8 @@ export default {
   methods: {
     checkDetail () {
       console.log(this.data.ID)
-      location.href = '/liaoliao-detail.html?topicID=' + this.data.ID
+      // location.href = '/liaoliao-detail.html?topicID=' + this.data.ID
+      location.href = window.detailPathPrefix + '/liaoliao-detail?topicID=' + this.data.ID
     }
   },
 

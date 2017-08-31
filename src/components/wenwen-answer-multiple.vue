@@ -25,6 +25,13 @@ export default {
 </script>
 
 <style scoped>
+.c-voice01:before {
+    border-bottom: 0.2rem solid #fac7c9;
+    border-left: 0.18rem solid transparent;
+    top: -0.18rem;
+    left: 0.05rem;
+}
+
 .info-img01 {
   float: left;
   position: relative;
