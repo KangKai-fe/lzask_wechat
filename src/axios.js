@@ -19,6 +19,9 @@ axios.userGrade = window.userGrade
 
 axios.interceptors.request.use(config => {
   // console.log('---------- http request ----------', config.url)
+  if (config.ignoreBaseUrl) {
+    config.url = config.url.replace(config.baseURL, '')
+  }
   if (config.method === 'get') {
     if (!config.params) {
       config.params = defaultParams

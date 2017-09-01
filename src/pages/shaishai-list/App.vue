@@ -1,15 +1,19 @@
 <template>
   <div>
-    <div class="tab-container">
-      <tab :style="{ width: (tagList.length + 2) * 2 + 'rem', 'min-width': '100%' }" :custom-bar-width="getBarWidth" :line-width="3" v-model="tabIndex">
-        <tab-item selected>最新</tab-item>
-        <tab-item>关注</tab-item>
-        <template v-if="tagList && tagList.length">
-          <tab-item v-for="(tag, index) in tagList"
-            :key="index"
-          >{{ tag.name }}</tab-item>
-        </template>
-      </tab>
+    <div class="sticky-container">
+      <sticky>
+        <div class="tab-container">
+          <tab :style="{ width: (tagList.length + 2) * 2 + 'rem', 'min-width': '100%' }" :custom-bar-width="getBarWidth" :line-width="3" v-model="tabIndex">
+            <tab-item selected>最新</tab-item>
+            <tab-item>关注</tab-item>
+            <template v-if="tagList && tagList.length">
+              <tab-item v-for="(tag, index) in tagList"
+                :key="index"
+              >{{ tag.name }}</tab-item>
+            </template>
+          </tab>
+        </div>
+      </sticky>
     </div>
     <div class="main-container">
       <mt-loadmore
@@ -33,7 +37,7 @@
         </div>
 
         <!-- no more data -->
-        <div class="no_more_data" v-if="listAllLoaded">
+        <div class="no_more_data" v-if="showList.length && listAllLoaded">
           暂无更多数据
         </div>
       </mt-loadmore>
@@ -46,7 +50,7 @@
 import { Loadmore } from 'mint-ui'
 
 /* vux */
-import { Tab, TabItem } from 'vux'
+import { Tab, TabItem, Sticky } from 'vux'
 
 /* custom component */
 import ListItem from '../../components/shaishai-list-item.vue'
@@ -154,10 +158,12 @@ export default {
     // setTimeout(() => {
     //   this.tagList = MockTags
     // }, 200)
-    this.$http.get(window.BaskTagsUrl || '/getBaskTags')
+    this.$http.get(window.BaskTagsUrl || '/getBaskTags', {
+      ignoreBaseUrl: true
+    })
       .then(res => {
         console.log(res)
-        this.tagList = JSON.parse(res)
+        this.tagList = JSON.parse(JSON.stringify(res))
       })
       .catch(err => {
         console.log('------------- err -------------', err)
@@ -197,12 +203,16 @@ export default {
     'list-item': ListItem,
     'mt-loadmore': Loadmore,
     Tab,
-    TabItem
+    TabItem,
+    Sticky
   }
 }
 </script>
 
 <style>
+.sticky-container {
+  height: 44px;
+}
 .tab-container {
   width: 100%;
   overflow: scroll;
