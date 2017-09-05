@@ -1,13 +1,12 @@
 <template>
   <div class="users">
     <!-- title -->
-    <div class="User_title" :class="{ 'hot': type === 'hot' }">
-      <span @click="checkMoreUsers"><a href="javascript: void(0);">显示全部</a></span>
-      <h3>
-        <i class="iconfont" v-if="type === 'hot'">&#xe608;</i>
-        <i class="iconfont" v-else-if="type === 'new'">&#xe61f;</i>
-        {{ title }}
-      </h3>
+    <div class="User_title" :class="{
+      'hot': type === 'hot',
+      'new': type === 'new'
+    }">
+      <span class="more" @click="checkMoreUsers">显示全部</span>
+      <h3 class="title">{{ title }}</h3>
     </div>
 
     <!-- user info -->
@@ -72,30 +71,32 @@ export default {
   line-height: 0.9rem;
   border-bottom: 0.01rem solid #e1e1e1;
 }
-.User_title span {
-  float: right;
-  background: url(../../static/img/more_bg02.png) no-repeat right center;
-  background-size: 0.12rem 0.19rem;
-}
-.User_title span a {
+.more {
   color: #909090;
   font-size: 0.24rem;
   height: 0.9rem;
   line-height: 0.9rem;
   display: block;
-  padding-right: 0.2rem;
+  padding-right: 0.3rem;
+  float: right;
+  background: url(../assets/img/icon_user_more.png) no-repeat right center;
+  background-size: 0.2rem 0.32rem;
 }
-.User_title h3 {
+.title {
   font-size: 0.32rem;
-  color: #80aedc;
+  padding-left: 0.7rem;
+  background-repeat: no-repeat;
+  background-position: left center;
+  font-weight: normal;
 }
-.User_title h3 i {
-  font-size: 0.35rem;
+.new .title {
   color: #80aedc;
-  margin-right: 0.12rem;
+  background-size: 0.6rem 0.6rem;
+  background-image: url(../assets/img/icon_user_new.png);
 }
-.User_title.hot h3,
-.User_title.hot .iconfont {
+.hot .title {
   color: #f88;
+  background-size: 0.51rem 0.6rem;
+  background-image: url(../assets/img/icon_user_hot.png);
 }
 </style>

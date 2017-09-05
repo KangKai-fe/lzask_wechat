@@ -219,6 +219,29 @@ export default {
           if (res.object.price === 0 || (res.object.payStatus && res.object.payStatus.status === 1)) {
             this.canPlayAudio = true
           }
+
+          /* wechat */
+          this.$wechat.ready(() => {
+            // share info
+            let shareData = {
+              title: res.object.description, // 分享标题
+              link: window.wx_shareUrl, // 分享链接
+              imgUrl: res.object.photoUrl || window.logo, // 分享图标
+              success: function () {
+                // 用户确认分享后执行的回调函数
+              },
+              cancel: function () {
+                // 用户取消分享后执行的回调函数
+              }
+            }
+            // to timeline
+            this.$wechat.onMenuShareTimeline(shareData)
+
+            // to friend
+            shareData.title = res.object.title
+            shareData.desc = res.object.description
+            this.$wechat.onMenuShareAppMessage(shareData)
+          })
         }
       })
       .catch(err => {

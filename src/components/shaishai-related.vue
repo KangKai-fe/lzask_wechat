@@ -24,6 +24,9 @@ export default {
       }
     }
   },
+  created () {
+    console.log('relatedUrl', window.detailPathPrefix + '/shaishai-detail?baskID=' + this.related.ID)
+  },
   components: {
     'module-title': ModuleTitle
   }

@@ -41,7 +41,7 @@ export default {
       return this.replyPlaceholder || '在这里说点什么吧'
     },
     readyToReply () {
-      if (this.replyContent.length > 4 && this.replyContent.length <= 200) {
+      if (this.replyContent.length >= 2 && this.replyContent.length <= 200) {
         return true
       }
       return false
@@ -55,9 +55,9 @@ export default {
       if (!this.readyToReply) {
         if (!this.replyContent) {
           this.toastMsg = '不能为空'
-        } else if (this.replyContent.length < 4) {
+        } else if (this.replyContent.length < 2) {
           this.toastMsg = '字数太少'
-        } else {
+        } else if (this.replyContent.length > 200) {
           this.toastMsg = '字数太多'
         }
         this.toastShow = true
@@ -92,7 +92,7 @@ export default {
         params.replyCommentID = this.replyCommentID
       }
 
-      this.$http.post(replyUrl, {
+      this.$http.get(replyUrl, {
         params
       })
         .then(res => {
@@ -130,7 +130,7 @@ export default {
 <style scoped>
 .message {
   background-color: #fff;
-  box-shadow: -1px 5px 10px #c2c2c2;
+  box-shadow: 0 0 5px #888;
   padding: 0.1rem 0.25rem;
   width: auto;
   overflow: hidden;

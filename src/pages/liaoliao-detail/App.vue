@@ -71,6 +71,29 @@ export default {
           if (this.llDetail.discussCount > 3) {
             this.btnAllShow = true
           }
+
+          /* wechat */
+          this.$wechat.ready(() => {
+            // share info
+            let shareData = {
+              title: res.object.title, // 分享标题
+              link: window.wx_shareUrl, // 分享链接
+              imgUrl: res.object.picUrl || window.logo, // 分享图标
+              success: function () {
+                // 用户确认分享后执行的回调函数
+              },
+              cancel: function () {
+                // 用户取消分享后执行的回调函数
+              }
+            }
+            // to timeline
+            this.$wechat.onMenuShareTimeline(shareData)
+
+            // to friend
+            shareData.title = '老子问问 - 聊聊'
+            shareData.desc = res.object.title
+            this.$wechat.onMenuShareAppMessage(shareData)
+          })
         }
       })
       .catch(err => {

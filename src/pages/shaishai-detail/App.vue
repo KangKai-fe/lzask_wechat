@@ -156,6 +156,34 @@ export default {
           if (res.object.userID !== this.$http.userID) {
             this.commentsBtnReplyShow = true
           }
+
+          /* wechat */
+          let wxTitle = res.object.content
+          if (!wxTitle || (wxTitle.indexOf('.amr') !== -1)) {
+            wxTitle = '老子问问 - 晒晒'
+          }
+
+          this.$wechat.ready(() => {
+            // share info
+            let shareData = {
+              title: wxTitle, // 分享标题
+              link: window.wx_shareUrl, // 分享链接
+              imgUrl: res.object.photoUrl || (res.object.picList && res.object.picList[0]) || window.logo, // 分享图标
+              success: function () {
+                // 用户确认分享后执行的回调函数
+              },
+              cancel: function () {
+                // 用户取消分享后执行的回调函数
+              }
+            }
+            // to timeline
+            this.$wechat.onMenuShareTimeline(shareData)
+
+            // to friend
+            shareData.title = '老子问问 - 晒晒'
+            shareData.desc = wxTitle
+            this.$wechat.onMenuShareAppMessage(shareData)
+          })
         }
       })
       .catch(err => {

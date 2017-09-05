@@ -3,7 +3,6 @@
 import Vue from 'vue'
 import App from './App'
 import axios from '../../axios'
-import '../../assets/css/iconfont.css'
 import '../../assets/css/reset.css'
 
 Vue.config.productionTip = false

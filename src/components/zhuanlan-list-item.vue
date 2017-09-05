@@ -7,8 +7,8 @@
             {{ title }}
           </h3>
           <p>
-            <span>
-              <i v-if="official">官</i>{{ date }}</span>
+            <span class="official" v-if="official"></span>
+            <span>{{ date }}</span>
             <strong>{{ viewCount }}人看过</strong>
           </p>
         </div>
@@ -49,6 +49,13 @@ export default {
 </script>
 
 <style scoped>
+  .official {
+    display: inline-block;
+    width: 0.3rem;
+    height: 0.3rem;
+    background: url(../assets/img/icon_official.png) center center no-repeat;
+    background-size: cover;
+  }
   .zl_list{width:auto;overflow: hidden;padding:0.3rem 0.25rem;}
   .zl_item{width: auto;overflow: hidden;margin-bottom: 0.2rem;border-radius: 0.1rem;background-color:#fff;}
   .zl_txt{width: 100%;float:left;}

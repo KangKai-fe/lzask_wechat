@@ -5,7 +5,6 @@
       <div class="btn_comment" v-if="btnReplyShow"
         @click.stop="replyBtnClickd"
       >
-        <i class="iconfont icon-icon"></i>
         写评论
       </div>
     </div>
@@ -122,5 +121,8 @@ export default {
 }
 .btn_comment {
   float: right;
+  padding-left: 0.48rem;
+  background: url(../assets/img/icon_reply.png) left center no-repeat;
+  background-size: 0.36rem 0.36rem;
 }
 </style>
