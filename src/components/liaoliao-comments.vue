@@ -9,7 +9,7 @@
         :key="comment.ID"
         :comment="comment"
       ></comment>
-      <div class="readMore" @click="showMore" v-if="btnMoreShow">
+      <div class="readMore" @click="showMore" v-if="btnAllShow">
         <a href="javascript: void(0);">查看全部</a>
       </div>
     </div>
@@ -23,7 +23,7 @@ import LLComment from './liaoliao-comment.vue'
 
 export default {
   name: 'll-comment',
-  props: [ 'commentsList', 'commentsCount', 'btnMoreShow' ],
+  props: [ 'commentsList', 'commentsCount', 'btnAllShow' ],
   methods: {
     showMore () {
       this.$emit('checkMoreComments')
@@ -64,6 +64,7 @@ export default {
   line-height: 1rem;
   font-size: 0.3rem;
   text-align: center;
+  margin-bottom: 0.2rem;
 }
 
 .readMore {

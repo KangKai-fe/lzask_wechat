@@ -11,7 +11,7 @@
     </div>
   </div>
   </div>
-</template>\
+</template>
 
 <script>
 import LLStatus from './liaoliao-status.vue'

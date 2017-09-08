@@ -18,14 +18,13 @@ export default {
   props: [ 'related' ],
   methods: {
     checkRelated () {
-      if (this.related.type === 2) { // shaishai
+      if (this.related.type === 1) {
+        location.href = window.detailPathPrefix + '/jiangjiang-detail?subjectID=' + this.related.ID
+      } else if (this.related.type === 2) { // shaishai
         // location.href = '/shaishai-detail.html?baskID=' + this.related.ID
         location.href = window.detailPathPrefix + '/shaishai-detail?baskID=' + this.related.ID
       }
     }
-  },
-  created () {
-    console.log('relatedUrl', window.detailPathPrefix + '/shaishai-detail?baskID=' + this.related.ID)
   },
   components: {
     'module-title': ModuleTitle

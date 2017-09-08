@@ -30,7 +30,8 @@ export default {
   props: [ 'answerUserInfo', 'answer' ],
   data () {
     return {
-      audioSource: this.answer.soundTime ? (this.$http.defaults.baseURL + '/answer/getAudio?answerID=' + this.answer.ID + '&userID=' + this.$http.userID) : ''
+      // audioSource: this.answer.soundTime ? (this.$http.defaults.baseURL + '/answer/getAudio?answerID=' + this.answer.ID + '&userID=' + this.$http.userID) : ''
+      audioSource: this.answer.soundTime ? ('/wx/answer/getAudio?answerID=' + this.answer.ID + '&userID=' + this.$http.userID) : ''
     }
   },
   components: {

@@ -30,7 +30,7 @@ export default {
       type: String,
       required: true,
       validator: function (value) {
-        return value
+        return value.replace(/\.(aac|amr)$/, '.mp3')
       }
     },
     soundTime: {

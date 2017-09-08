@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{ container_padded: commentable }">
     <!-- liaoliao content -->
     <ll-detail :llInfo="llDetail"></ll-detail>
 
@@ -10,6 +10,13 @@
       :btnAllShow="btnAllShow"
       @checkMoreComments="getAllComments"
     ></comments>
+
+    <!-- comment area -->
+    <comment-area v-if="commentable && llDetail"
+      :topicID="llDetail.ID"
+      :minContent="10"
+      @commentSucceed="commentSucceed"
+    ></comment-area>
   </div>
 </template>
 
@@ -20,6 +27,7 @@ import { querystring } from 'vux'
 /* custom component */
 import LLDetail from '../../components/liaoliao-detail.vue'
 import LLComments from '../../components/liaoliao-comments.vue'
+import CommentArea from '../../components/comment-area.vue'
 
 export default {
   name: 'app',
@@ -28,7 +36,8 @@ export default {
       topicID: '',
       llDetail: {},
       commentsList: [],
-      btnAllShow: false
+      btnAllShow: false,
+      commentable: false
     }
   },
   computed: {
@@ -50,6 +59,23 @@ export default {
         .catch(err => {
           console.log('err', err)
         })
+    },
+    commentSucceed (commentRes, commentContent) {
+      let comment = {}
+      comment = commentRes
+      comment.userInfo = {}
+      comment.userInfo.ID = this.$http.userID
+      comment.userInfo.showName = this.$http.userName
+      comment.userInfo.photo = this.$http.userPhoto
+      comment.userInfo.accountBalance = {}
+      comment.userInfo.accountBalance.grade = this.$http.userGrade
+      if (!commentRes.content && commentContent) {
+        comment.content = commentContent
+      }
+      if (this.commentTargetObj) {
+        comment.parentComment = this.commentTargetObj
+      }
+      this.commentsList.push(comment)
     }
   },
 
@@ -70,6 +96,10 @@ export default {
           this.llDetail = res.object
           if (this.llDetail.discussCount > 3) {
             this.btnAllShow = true
+          }
+
+          if (this.llDetail.status === 3) {
+            this.commentable = true
           }
 
           /* wechat */
@@ -119,32 +149,11 @@ export default {
 
   components: {
     'll-detail': LLDetail,
-    'comments': LLComments
+    'comments': LLComments,
+    'comment-area': CommentArea
   }
 }
 </script>
 
 <style>
-.question01 {
-  background-color: #fff;
-}
-
-.message {
-  background-color: #fff;
-  box-shadow: -1px 5px 10px #c2c2c2;
-  padding: 0.1rem 0.25rem;
-  width: auto;
-  overflow: hidden;
-}
-
-.message textarea {
-  background: none;
-  width: 100%;
-  min-height: 1.1rem;
-  border: none;
-  background: url(../../assets/img/message_bg.png) no-repeat right center;
-  display: block;
-  color: #bcbcbc;
-  background-size: 0.48rem;
-}
 </style>

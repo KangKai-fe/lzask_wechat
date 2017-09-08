@@ -44,7 +44,8 @@ export default {
   },
   computed: {
     source () {
-      return this.$http.defaults.baseURL + '/answer/getAudio?answerID=' + this.comment.fileName + '&userID=' + this.$http.userID
+      // return this.$http.defaults.baseURL + '/answer/getAudio?answerID=' + this.comment.fileName + '&userID=' + this.$http.userID
+      return '/wx/answer/getAudio?answerID=' + this.comment.fileName + '&userID=' + this.$http.userID
     }
   }
 }

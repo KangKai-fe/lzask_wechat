@@ -19,8 +19,17 @@ export default {
     baskID: String, // 晒晒评论
     answerID: String, // 问问评论
     subjectID: String, // 讲讲评论
+    topicID: String, // 聊聊评论
     replyCommentID: String,
-    replyPlaceholder: String
+    replyPlaceholder: String,
+    maxContent: {
+      type: Number,
+      default: 400
+    }, // 最大回复字数
+    minContent: {
+      type: Number,
+      default: 2
+    } // 最小回复字数
   },
   data () {
     return {
@@ -41,7 +50,7 @@ export default {
       return this.replyPlaceholder || '在这里说点什么吧'
     },
     readyToReply () {
-      if (this.replyContent.length >= 2 && this.replyContent.length <= 200) {
+      if (this.replyContent.length >= this.minContent && this.replyContent.length <= this.maxContent) {
         return true
       }
       return false
@@ -55,10 +64,10 @@ export default {
       if (!this.readyToReply) {
         if (!this.replyContent) {
           this.toastMsg = '不能为空'
-        } else if (this.replyContent.length < 2) {
-          this.toastMsg = '字数太少'
-        } else if (this.replyContent.length > 200) {
-          this.toastMsg = '字数太多'
+        } else if (this.replyContent.length < this.minContent) {
+          this.toastMsg = '字数太少, 应多于' + this.minContent + '字'
+        } else if (this.replyContent.length > this.maxContent) {
+          this.toastMsg = '字数太多, 不应超过' + this.maxContent + '字'
         }
         this.toastShow = true
         this.toastType = 'cancel'
@@ -84,6 +93,9 @@ export default {
       } else if (this.subjectID) { // 讲讲
         params.subjectID = this.subjectID
         replyUrl = '/talkComment/create'
+      } else if (this.topicID) { // 聊聊
+        params.topicID = this.topicID
+        replyUrl = '/discuss/createByContent'
       } else {
         return
       }
@@ -97,10 +109,10 @@ export default {
       })
         .then(res => {
           if (res.resultCode === 200) {
+            this.$emit('commentSucceed', res.object || {}, this.replyContent)
             this.toastMsg = '评论成功'
             this.toastType = ''
             this.replyContent = ''
-            this.$emit('commentSucceed', res.object)
           } else {
             this.toastMsg = '评论失败, 请重试'
             this.toastType = 'cancel'
@@ -146,7 +158,6 @@ export default {
 textarea {
   background: none;
   width: 100%;
-  min-height: 1.1rem;
   border: none;
   background-size: 0.48rem;
   resize: none;
@@ -155,8 +166,8 @@ textarea {
 }
 .icon_send {
   display: inline-block;
-  width: 0.75rem;
-  height: 0.71rem;
+  width: 0.6rem;
+  height: 0.6rem;
   background: url(../assets/img/icon_send.png) no-repeat center center;
   background-size: cover;
 }

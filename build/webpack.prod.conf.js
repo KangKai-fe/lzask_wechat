@@ -73,7 +73,7 @@ var webpackConfig = merge(baseWebpackConfig, {
 
 
     /* 合并打包 */
-/*     // split vendor js into its own file
+    // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: function (module, count) {
@@ -92,7 +92,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
       chunks: ['vendor']
-    }), */
+    }),
     // copy custom static assets
     new CopyWebpackPlugin([
       {

@@ -126,6 +126,10 @@ export default {
 
     /* wechat */
     this.$wechat.ready(() => {
+      window.addEventListener('popstate', () => {
+        this.$wechat.closeWindow()
+      }, false)
+
       // share info
       let shareData = {
         title: '老子问问 - 讲讲', // 分享标题

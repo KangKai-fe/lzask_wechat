@@ -18,13 +18,14 @@
 
       <!-- zhuanlan list -->
       <list-item v-for="item in dataList"
-        :key="item.id"
-        :id="item.id"
+        :key="item.ID"
+        :id="item.ID"
         :title="item.title"
         :official="item.official"
-        :date="item.date"
+        :date="item.createDate"
         :viewCount="item.viewCount"
-        :imgUrl="item.imgUrl"
+        :imgUrl="item.photoUrl"
+        :url="item.url"
       ></list-item>
 
       <!-- no more data -->
@@ -42,7 +43,6 @@ import { Loadmore } from 'mint-ui'
 
 /* custom component */
 import ListItem from '../../components/zhuanlan-list-item.vue'
-import MockData from '../../mockdata/zhuanlan-list'
 
 export default {
   name: 'app',
@@ -51,7 +51,17 @@ export default {
       dataList: [],
       listAllLoaded: false,
       topStatus: '',
-      currentPage: 1
+      currentPage: 1,
+      requestUrl: '/official/listByPublish'
+    }
+  },
+  computed: {
+    params () {
+      let params = {}
+      params.pageIndex = this.currentPage
+      params.pageSize = 5
+      params.userID = 'all'
+      return params
     }
   },
   methods: {
@@ -60,75 +70,87 @@ export default {
     },
 
     listLoadTop () {
-      setTimeout(() => {
-        this.dataList = MockData
-        this.$refs.loadmoreItems.onTopLoaded()
-      }, 500)
-      // this.$http.get('/official/listByPublish', {
-      //   params: {
-      //     pageIndex: 1
-      //   }
-      // })
-      //   .then(res => {
-      //     if (res.resultCode === 200) {
-      //       this.dataList = res.object
-      //       this.currentPage = 2
-      //       this.listAllLoaded = false
-      //     }
-      //     this.$refs.loadmoreItems.onTopLoaded()
-      //   })
-      //   .catch(err => {
-      //     console.log('err', err)
-      //     this.$refs.loadmoreItems.onTopLoaded()
-      //   })
+      this.currentPage = 1
+      this.$http.get(this.requestUrl, {
+        params: this.params
+      })
+        .then(res => {
+          if (res.resultCode === 200) {
+            this.dataList = res.object
+            this.currentPage++
+            this.listAllLoaded = false
+          }
+          this.$refs.loadmoreItems.onTopLoaded()
+        })
+        .catch(err => {
+          console.log('err', err)
+          this.$refs.loadmoreItems.onTopLoaded()
+        })
     },
 
     listLoadBottom () {
-      setTimeout(() => {
-        this.dataList = this.dataList.concat(MockData)
-        this.$refs.loadmoreItems.onBottomLoaded()
-      }, 500)
-      // this.$http.get('/official/listByPublish', {
-      //   params: {
-      //     pageIndex: this.currentPage
-      //   }
-      // })
-      //   .then(res => {
-      //     if (res.resultCode === 200) {
-      //       if (res.object.length > 0) {
-      //         this.dataList = this.dataList.concat(res.object)
-      //         this.currentPage++
-      //       } else {
-      //         this.listAllLoaded = true
-      //       }
-      //     }
-      //     this.$refs.loadmoreItems.onBottomLoaded()
-      //   })
-      //   .catch(err => {
-      //     console.log('err', err)
-      //     this.$refs.loadmoreItems.onBottomLoaded()
-      //   })
+      this.$http.get(this.requestUrl, {
+        params: this.params
+      })
+        .then(res => {
+          if (res.resultCode === 200) {
+            if (res.object.length > 0) {
+              this.dataList = this.dataList.concat(res.object)
+              this.currentPage++
+            } else {
+              this.listAllLoaded = true
+            }
+          }
+          this.$refs.loadmoreItems.onBottomLoaded()
+        })
+        .catch(err => {
+          console.log('err', err)
+          this.$refs.loadmoreItems.onBottomLoaded()
+        })
     }
   },
   created () {
-    this.dataList = MockData
-    // this.$http.get('/official/listByPublish', {
-    //   params: {
-    //     pageIndex: 1
-    //   }
-    // })
-    //   .then(res => {
-    //     if (res.resultCode === 200) {
-    //       this.dataList = res.object
-    //       this.currentPage++
-    //       if (res.object.length === 0) {
-    //         this.listAllLoaded = true
-    //       }
-    //     }
-    //   })
-    //   .catch(err => {
-    //     console.log('------------- err -------------', err)
-    //   })
+    if (this.dataList.length) {
+      return
+    }
+    this.currentPage = 1
+    this.$http.get(this.requestUrl, {
+      params: this.params
+    })
+      .then(res => {
+        if (res.resultCode === 200) {
+          this.dataList = res.object
+          this.currentPage++
+          if (res.object.length === 0) {
+            this.listAllLoaded = true
+          }
+        }
+      })
+      .catch(err => {
+        console.log('------------- err -------------', err)
+      })
+
+    /* wechat */
+    this.$wechat.ready(() => {
+      // share info
+      let shareData = {
+        title: '老子问问 - 专栏', // 分享标题
+        link: window.wx_shareUrl, // 分享链接
+        imgUrl: window.logo, // 分享图标
+        success: function () {
+          // 用户确认分享后执行的回调函数
+        },
+        cancel: function () {
+          // 用户取消分享后执行的回调函数
+        }
+      }
+      // to timeline
+      this.$wechat.onMenuShareTimeline(shareData)
+
+      // to friend
+      shareData.desc = '老子问问 - 专栏列表'
+      this.$wechat.onMenuShareAppMessage(shareData)
+    })
   },
   components: {
     'list-item': ListItem,

@@ -90,6 +90,16 @@ export default {
     }
   },
   created () {
+    this.$http.get('/topic/listByPublish')
+      .then(res => {
+        if (res.resultCode === 200) {
+          this.dataList = res.object.concat(this.dataList)
+        }
+      })
+      .catch(err => {
+        console.log('------------- err -------------', err)
+      })
+
     this.$http.get('/topic/listHistory', {
       params: {
         pageIndex: 1
@@ -97,7 +107,7 @@ export default {
     })
       .then(res => {
         if (res.resultCode === 200) {
-          this.dataList = res.object
+          this.dataList = this.dataList.concat(res.object)
           this.currentPage++
         }
       })
@@ -107,6 +117,10 @@ export default {
 
     /* wechat */
     this.$wechat.ready(() => {
+      window.addEventListener('popstate', () => {
+        this.$wechat.closeWindow()
+      }, false)
+
       // share info
       let shareData = {
         title: '老子问问 - 聊聊', // 分享标题

@@ -299,7 +299,7 @@ export default {
 .jj-txt02 {
   width: auto;
   overflow: hidden;
-  padding:0.25rem;
+  padding:0.24rem 0.3rem 0.28rem;
   margin-left: 0;
   background-color:#fff;
   min-height: 1.2rem;
@@ -307,16 +307,13 @@ export default {
 
 .jj-txt02 h3 {
   font-size: 0.32rem;
-  height: 0.39rem;
-  line-height: 0.39rem;
   overflow: hidden;
-  padding-top: 0.05rem;
 }
 
 .jj-txt02 p {
   color: #969696;
   font-size: 0.28rem;
-  padding: 0.05rem 0;
+  margin-top: 0.2rem;
 }
 
 .jj-txt02 p span {

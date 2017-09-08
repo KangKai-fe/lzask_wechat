@@ -98,6 +98,7 @@ export default {
   text-align: center;
   height: 1rem;
   line-height: 1rem;
+  margin-bottom: 0.2rem;
 }
 
 .readMore a {
@@ -118,6 +119,7 @@ export default {
   font-size: 0.3rem;
   text-align: center;
   color: #646464;
+  margin-bottom: 0.2rem;
 }
 .btn_comment {
   float: right;
