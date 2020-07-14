@@ -13,7 +13,7 @@
   "dependencies": {
     "axios": "0.16.2",
     "mint-ui": "2.2.9",
-    "moment": "2.18.1",
+    "moment": "2.19.3",
     "vue": "^2.3.3",
     "vux": "2.5.7"
   },
